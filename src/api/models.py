@@ -30,8 +30,7 @@ class Cards(db.Model):
 
     def serialize(self):
         return {
-            "id": self.id,
-            "email": self.card_provider,
+            "id": self.id,            
             "card_provider":self.card_provider,
             "last_four":self.last_four,
             "bank_name":self.bank_name,
