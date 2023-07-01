@@ -29,8 +29,12 @@ def hande_hello():
 
 @api.route('/cards', methods=['POST'])
 def create_new_card():
+
+    new_card = n_card('admin', 'admin@example.com')
+    db.session.add(card)
+    db.session.commit()
     
-    print(request.get_json())
+    print(request.get_json("cards"))
     
     response_body = {
         "message": "Hello! I'm a message that came from the backend, check the network tab on the google inspector and you will see the GET request"
