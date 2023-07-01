@@ -3,5 +3,13 @@
     "editor.defaultFormatter": "esbenp.prettier-vscode",
     "workbench.editorAssociations": {   
         "*.md": "vscode.markdown.preview.editor"
+<<<<<<< HEAD
     }
+=======
+    },
+    "[python]": {
+        "editor.defaultFormatter": "ms-python.black-formatter"
+    },
+    "python.formatting.provider": "none"
+>>>>>>> 04f015d27cd95949da55ae6839f202e380c8e37c
 }

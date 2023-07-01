@@ -1,12 +1,30 @@
 import React, { useState, useEffect, useContext } from "react";
+<<<<<<< HEAD
 import { Link } from "react-router-dom";
+=======
+import { Link, Navigate, useNavigate } from "react-router-dom";
+>>>>>>> 04f015d27cd95949da55ae6839f202e380c8e37c
 
 import { Context } from "../store/appContext";
 
 export const Demo = () => {
 	const { store, actions } = useContext(Context);
+<<<<<<< HEAD
 
 	return (
+=======
+	const navigate = useNavigate()
+
+	function handle_logout() {
+		actions.logout()
+		navigate("/")
+	}
+
+	console.log(store.auth)
+
+	return (
+		(store.auth === true ?  
+>>>>>>> 04f015d27cd95949da55ae6839f202e380c8e37c
 		<div className="container">
 			<ul className="list-group">
 				{store.demo.map((item, index) => {
@@ -36,6 +54,16 @@ export const Demo = () => {
 			<Link to="/">
 				<button className="btn btn-primary">Back home</button>
 			</Link>
+<<<<<<< HEAD
 		</div>
+=======
+			<button 
+				className="btn btn-danger float-end" 
+				onClick={()=>handle_logout()}>
+					Logout
+			</button>
+		</div>
+		: "Su tiempo de acceso ha finalizado.")
+>>>>>>> 04f015d27cd95949da55ae6839f202e380c8e37c
 	);
 };
