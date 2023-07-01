@@ -1,5 +1,5 @@
 from flask import Flask, request, jsonify, url_for, Blueprint
-from api.models import db, User
+from api.models import db, User, Stablishments
 from api.utils import generate_sitemap, APIException
 from flask_jwt_extended import create_access_token, get_jwt_identity, jwt_required
 
@@ -62,3 +62,15 @@ def protected():
 
 if __name__ == "__main__":
     api.run()
+
+@api.route('/hello', methods=['GET'])
+def handle_hello():
+    all_stablishments = Stablishments.query.all()
+    print(all_stablishments)
+    result = map(lambda stablishment_name: stablishment_name.serialize(), all_stablishments)
+    print(result)
+    print(list(result))
+    response_body = {
+        "message": "Hello!"
+    }
+    return jsonify(response_body), 200    
