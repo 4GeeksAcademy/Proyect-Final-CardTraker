@@ -64,6 +64,27 @@ const getState = ({ getStore, getActions, setStore }) => {
 					.then(response =>response.json())
 					.then(data => console.log(data));
 			},
+//Agregar tarjeta a db desde componente de form
+			addCard:(card_provider,last_four,bank_name,card_user_id)=>{
+				const requestOptions = {
+					method: 'POST',
+					headers: {'Content-Type': 'application/json'},
+					body: JSON.stringify(
+						{
+							"card_provider":card_provider,
+							"last_four":last_four,
+							"bank_name":bank_name,
+							"card_user_id":card_user_id 
+						})
+					};
+				  
+				  
+				  fetch("https://afbeltranv-symmetrical-funicular-jjr4pvw7gp4cpxwj-3001.preview.app.github.dev/api/cards/", requestOptions)
+					.then(response => response.text())
+					.then(result => console.log(result))
+					.catch(error => console.log('error', error));
+
+			},
 
 			getMessage: async () => {
 				try{

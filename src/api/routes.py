@@ -17,7 +17,7 @@ def sign_up():
         db.session.commit()
 
         response_body = {
-            "message": "Se creo un nuevo usuario con existo."
+            "message": "Se creo un nuevo usuario con exito."
         }
         return jsonify(response_body), 200
     
