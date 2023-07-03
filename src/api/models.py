@@ -22,9 +22,9 @@ class User(db.Model):
 
 class Cards(db.Model):
     id = db.Column(db.Integer, primary_key=True)
-    card_provider = db.Column(db.String(120), unique=True, nullable=False)
-    last_four = db.Column(db.Integer(), unique=True, nullable=False)
-    bank_name = db.Column(db.String(), unique=True, nullable=False)
+    card_provider = db.Column(db.String(120), nullable=False)
+    last_four = db.Column(db.Integer(), nullable=False)
+    bank_name = db.Column(db.String(), nullable=False)
     user_id = db.Column(db.Integer(), nullable=False)
 
     def __repr__(self):

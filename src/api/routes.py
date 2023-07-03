@@ -63,9 +63,9 @@ def protected():
 if __name__ == "__main__":
     api.run()
 
-#Llama todas las tarjetas
+#Llama todas las tarjetas OK
 @api.route('/cards', methods=['GET'])
-def hande_hello():
+def get_cards():
     all_cards = Cards.query.all()
     print(all_cards)
     result = list(map(lambda card: card.serialize() ,all_cards))
@@ -73,19 +73,27 @@ def hande_hello():
 
     return jsonify(result), 200
 
+#Llama una sola tarjeta OK
+@api.route('/cards/<int:card_id>', methods=['GET'])
+def get_card(card_id):
+    card=Cards.query.filter_by(id=card_id).first()
+
+    return jsonify(card.serialize()), 200
+
 #Crea una nueva tarjeta
 
 @api.route('/cards', methods=['POST'])
 def create_new_card():
+    
+    print(request.get_json()["card_provider"])
 
-    new_card = n_card('admin', 'admin@example.com')
-    db.session.add(card)
+    card_body=request.get_json()
+    new_card=Cards(card_provider=card_body["card_provider"],last_four=card_body["last_four"], bank_name=card_body["bank_name"], user_id=card_body["user_id"])
+    db.session.add(new_card)
     db.session.commit()
     
-    print(request.get_json("cards"))
-    
     response_body = {
-        "message": "Hello! I'm a message that came from the backend, check the network tab on the google inspector and you will see the GET request"
+        "message": "Se crea una nueva tarjeta"
     }
 
     
