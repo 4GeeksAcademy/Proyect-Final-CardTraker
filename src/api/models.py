@@ -8,6 +8,7 @@ class User(db.Model):
     user_name = db.Column(db.String(120), unique=True, nullable=False)
     password = db.Column(db.String(80), unique=False, nullable=False)
     is_admin = db.Column(db.Boolean(), unique=False, nullable=False)
+    cards = db.relationship('Cards', backref='user', lazy=True)
 
     def __repr__(self):
         return f'<User {self.email}>'
@@ -24,8 +25,8 @@ class Cards(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     card_provider = db.Column(db.String(120), nullable=False)
     last_four = db.Column(db.Integer(), nullable=False)
-    bank_name = db.Column(db.String(), nullable=False)
-    user_id = db.Column(db.Integer(), nullable=False)
+    bank_name = db.Column(db.String(), nullable=False)    
+    card_user_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
 
     def __repr__(self):
         return f'<Cards {self.id}>'
