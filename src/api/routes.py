@@ -1,5 +1,5 @@
 from flask import Flask, request, jsonify, url_for, Blueprint
-from api.models import db, User
+from api.models import db, User, Cards
 from api.utils import generate_sitemap, APIException
 from flask_jwt_extended import create_access_token, get_jwt_identity, jwt_required
 
@@ -62,3 +62,31 @@ def protected():
 
 if __name__ == "__main__":
     api.run()
+
+#Llama todas las tarjetas
+@api.route('/cards', methods=['GET'])
+def hande_hello():
+    all_cards = Cards.query.all()
+    print(all_cards)
+    result = list(map(lambda card: card.serialize() ,all_cards))
+    print(result)    
+
+    return jsonify(result), 200
+
+#Crea una nueva tarjeta
+
+@api.route('/cards', methods=['POST'])
+def create_new_card():
+
+    new_card = n_card('admin', 'admin@example.com')
+    db.session.add(card)
+    db.session.commit()
+    
+    print(request.get_json("cards"))
+    
+    response_body = {
+        "message": "Hello! I'm a message that came from the backend, check the network tab on the google inspector and you will see the GET request"
+    }
+
+    
+    return jsonify(response_body)
