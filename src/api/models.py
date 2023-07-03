@@ -37,6 +37,6 @@ class Cards(db.Model):
             "card_provider":self.card_provider,
             "last_four":self.last_four,
             "bank_name":self.bank_name,
-            "user_id":self.user_id            
+            "card_user_id":self.card_user_id            
             # do not serialize the password, its a security breach
         }

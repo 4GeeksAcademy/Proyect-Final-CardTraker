@@ -80,7 +80,7 @@ def get_card(card_id):
 
     return jsonify(card.serialize()), 200
 
-#Crea una nueva tarjeta
+#Crea una nueva tarjeta OK
 
 @api.route('/cards', methods=['POST'])
 def create_new_card():
@@ -88,12 +88,26 @@ def create_new_card():
     print(request.get_json()["card_provider"])
 
     card_body=request.get_json()
-    new_card=Cards(card_provider=card_body["card_provider"],last_four=card_body["last_four"], bank_name=card_body["bank_name"], user_id=card_body["user_id"])
+    new_card=Cards(card_provider=card_body["card_provider"],last_four=card_body["last_four"], bank_name=card_body["bank_name"], card_user_id=card_body["card_user_id"])
     db.session.add(new_card)
     db.session.commit()
     
     response_body = {
         "message": "Se crea una nueva tarjeta"
+    }
+
+    
+    return jsonify(response_body)
+
+#Borra una tarjeta OK
+@api.route('/cards/<int:card_id>', methods=['DELETE'])
+def delete_card(card_id):
+    card=Cards.query.filter_by(id=card_id).first()    
+    db.session.delete(card)
+    db.session.commit()  
+    
+    response_body = {
+        "message": "Se BORRA una tarjeta"
     }
 
     
