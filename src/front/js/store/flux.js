@@ -29,7 +29,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 						}
 					)
 				};
-				fetch("https://germanebarbosa-scaling-space-train-g95wp4q4j442vxvx-3001.preview.app.github.dev/api/login", requestOptions)
+				fetch(process.env.BACKEND_URL+"/api/login", requestOptions)
 					.then(response => {
 						console.log(response.status); //imprimo la validacion del codigo, 200 es correcto 401 significa error.
 						if( response.status === 200 ){
@@ -60,7 +60,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 						}
 					)
 				};
-				fetch("https://germanebarbosa-scaling-space-train-g95wp4q4j442vxvx-3001.preview.app.github.dev/api/signup", requestOptions)
+				fetch(process.env.BACKEND_URL+"/api/signup", requestOptions)
 					.then(response =>response.json())
 					.then(data => console.log(data));
 			},
@@ -79,7 +79,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 					};
 				  
 				  
-				  fetch("https://afbeltranv-symmetrical-funicular-jjr4pvw7gp4cpxwj-3001.preview.app.github.dev/api/cards/", requestOptions)
+				  fetch(process.env.BACKEND_URL+"/api/cards/", requestOptions)
 					.then(response => response.text())
 					.then(result => console.log(result))
 					.catch(error => console.log('error', error));

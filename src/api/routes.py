@@ -49,7 +49,11 @@ def login():
     
     access_token = create_access_token(identity=email)
     print(access_token)
-    return jsonify(access_token=access_token)
+    return jsonify({
+        "access_token":access_token,
+        "user":user.serialize()
+        })
+   
 
 # Protect a route with jwt_required, which will kick out requests
 # without a valid JWT present.

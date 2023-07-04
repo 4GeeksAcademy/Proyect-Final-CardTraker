@@ -11,7 +11,7 @@ export const Home = () => {
 
 	return (
 		<>	
-		<CardReg></CardReg>
+		<CardReg/>
 			<div className="text-center mt-5">
 				<h1>Hello Rigo!!</h1>
 				<p>
