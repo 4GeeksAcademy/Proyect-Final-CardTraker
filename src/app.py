@@ -1,6 +1,3 @@
-"""
-This module takes care of starting the API Server, Loading the DB and Adding the endpoints
-"""
 import os
 from flask import Flask, request, jsonify, url_for, send_from_directory
 from flask_migrate import Migrate
@@ -12,6 +9,7 @@ from api.routes import api
 from api.admin import setup_admin
 from api.commands import setup_commands
 from flask_jwt_extended import JWTManager
+from flask_mail import Mail
 
 #from models import Person
 
@@ -37,6 +35,15 @@ CORS(app)
 # Setup the Flask-JWT-Extended extension
 app.config["JWT_SECRET_KEY"] = "CardTrackers2023"
 jwt = JWTManager(app)
+
+#Mail Server and Port
+app.config['MAIL_SERVER']='smtp.gmail.com'
+app.config['MAIL_PORT'] = 465
+app.config['MAIL_USERNAME'] = 'germanebarbosa5@gmail.com'
+app.config['MAIL_PASSWORD'] = 'Gebr.7177671'
+app.config['MAIL_USE_TLS'] = False
+app.config['MAIL_USE_SSL'] = True
+mail = Mail(app)
 
 # add the admin
 setup_admin(app)

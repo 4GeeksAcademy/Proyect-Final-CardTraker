@@ -3,13 +3,13 @@ import { Link } from "react-router-dom";
 import { Context } from "../store/appContext";
 import "../../styles/login.css";
 
-export const Recover = () => {
+export const Request = () => {
 	const [email, setEmail] = useState('')
 	const {actions, store} = useContext(Context)
 	
 	function sendData(e){
 		e.preventDefault()
-		// actions.signup(email, user_name ,password);
+		actions.sendEmail(email);
 	}
 
 	return (

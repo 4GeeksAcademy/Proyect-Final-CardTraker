@@ -104,9 +104,25 @@ const getState = ({ getStore, getActions, setStore }) => {
 			},
 			
 			sendEmail: (email) => {
-				console.log(email);
+				const requestOptions = {
+					method:'POST',
+					headers: { 'Content-Type':'application/json'},
+					body: JSON.stringify(
+						{
+							"email": email,
+						}
+					)
+				};
+				fetch(process.env.BACKEND_URL+ "/api/request_reset", requestOptions)
+					.then(response => response.json())
+					.then(data => {
+						if (data.msg) {
+							setStore({flashMessage:data.msg});
+						}
+						console.log(data)
+					});
 			},
-			
+
 			getMessage: async () => {
 				try{
 					// fetching data from the backend

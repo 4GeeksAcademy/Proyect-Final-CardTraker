@@ -72,7 +72,7 @@ export const Login = () => {
 							<span className="txt1">
 								Forgot your password? 
 							</span>
-							<Link to="/reset_password" className="txt2 ms-2">
+							<Link to="/request_reset" className="txt2 ms-2">
 									<strong>Recover Password</strong>
 							</Link>
 						</div>

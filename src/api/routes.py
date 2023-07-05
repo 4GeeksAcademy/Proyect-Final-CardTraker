@@ -1,9 +1,10 @@
-from flask import Flask, request, jsonify, url_for, Blueprint, flash
+from flask import Flask, request, jsonify, url_for, Blueprint, flash, redirect
 from api.models import db, User
 from api.utils import generate_sitemap, APIException
 from flask_jwt_extended import create_access_token, get_jwt_identity, jwt_required
-# from flask_mail import Mail, Message
-from flask_login import login_required
+from flask_login import login_required, current_user
+from flask_mail import Message
+# from app import mail
 
 api = Blueprint('api', __name__)
 
@@ -64,19 +65,41 @@ def login():
         "access_token":access_token,
         "user":user.serialize()
         })
+#Funcion que manda el correo.
+def send_reset_email (user):
+    token = user.get_reset_token()
+    msg = Message('Password reset request', 
+                sender='noreply@demo.com',
+                recipients=[user.email])
+    msg.body = f'''To reset your password visit the following link:
+{url_for('reset_token',token=token,_externar=True)}
+Si tu no hiciste este requerimiento por favor ignora este mensaje.
+    '''
+    mail.send(msg)
 
-#Recuperacion de la contraseña
-@api.route("/reset_password", methods=["GET","POST"])
+#Solicitud de cambio de contrasena
+@api.route("/request_reset", methods=["GET","POST"])
 def reset_request():
+    # if current_user.is_authenticated:
+    #     return redirect(url_for('home'))
     email = request.json.get("email", None)
     user = User.query.filter_by(email=email).first()
-    if user :
-        flash('Se ha mandado el correo, revisa tu bandeja de entrada.',)
-        # send_mail();
+    if user is None:
+        flash('No existe este usuario, debe registrarse primero.')
+        return jsonify({"msg": "Incorrect username or password"}), 401
+    # send_reset_email(user)
+    flash('Se ha sido enviado un correo con instrucciones para cambiar su contraseña.','info')
+    return jsonify({"user":user.serialize()}), 200
 
-@api.route("/reset_password/<token>", methods=["GET","POST"])
-def reset_token(token):
-    s = User
+#Recuperacion de la contraseña
+# @api.route("/reset_password/<token>", methods=["GET","POST"])
+# def reset_token(token):
+#     if current_user.is_authenticated:
+#         return redirect(url_for('home'))
+#     user = User.verify_reset_token(token)
+#     if user is None:
+#         flash('Tu token esta inavilidado.','warning')
+#         return redirect(url_for('reset_request'))
 
 # Protect a route with jwt_required, which will kick out requests
 # without a valid JWT present.
