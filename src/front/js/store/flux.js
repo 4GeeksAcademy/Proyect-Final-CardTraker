@@ -102,7 +102,11 @@ const getState = ({ getStore, getActions, setStore }) => {
 					.then(result => console.log(result))
 					.catch(error => console.log('error', error));
 			},
-
+			
+			sendEmail: (email) => {
+				console.log(email);
+			},
+			
 			getMessage: async () => {
 				try{
 					// fetching data from the backend

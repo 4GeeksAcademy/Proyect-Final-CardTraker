@@ -34,7 +34,7 @@ export const Login = () => {
 								value={email} 
 								onChange={(e)=>setEmail(e.target.value.toLowerCase())}
 								className={`input100 ${email.trim() !== '' ? 'has-val' : ''}`} 
-								type="text" 
+								type="email" 
 								name="email"
 							/>
 							<span className="focus-input100" data-placeholder="Email"></span>
@@ -64,20 +64,16 @@ export const Login = () => {
 							<span className="txt1">
 								Don’t have an account? 
 							</span>
-							<Link to="/register">
-								<a className="txt2 ms-2">
+							<Link to="/register" className="txt2 ms-2">
 									<strong>Sign Up</strong>
-								</a>
 							</Link>
 						</div>
 						<div className="text-center">
 							<span className="txt1">
 								Forgot your password? 
 							</span>
-							<Link to="/reset_password">
-								<a className="txt2 ms-2">
+							<Link to="/reset_password" className="txt2 ms-2">
 									<strong>Recover Password</strong>
-								</a>
 							</Link>
 						</div>
 					</form>

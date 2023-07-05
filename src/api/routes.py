@@ -2,6 +2,8 @@ from flask import Flask, request, jsonify, url_for, Blueprint, flash
 from api.models import db, User
 from api.utils import generate_sitemap, APIException
 from flask_jwt_extended import create_access_token, get_jwt_identity, jwt_required
+# from flask_mail import Mail, Message
+from flask_login import login_required
 
 api = Blueprint('api', __name__)
 
@@ -38,7 +40,7 @@ def get_users():
 
 # Elimina un usuario registrado
 @api.route('/user/<int:user_id>', methods=['DELETE'])
-# @login_required
+@login_required
 def delete_user(user_id):
     user = User.query.filter_by(id=user_id).first()
     db.session.delete(user)
@@ -72,7 +74,9 @@ def reset_request():
         flash('Se ha mandado el correo, revisa tu bandeja de entrada.',)
         # send_mail();
 
-
+@api.route("/reset_password/<token>", methods=["GET","POST"])
+def reset_token(token):
+    s = User
 
 # Protect a route with jwt_required, which will kick out requests
 # without a valid JWT present.

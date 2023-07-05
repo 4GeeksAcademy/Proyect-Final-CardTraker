@@ -3,13 +3,13 @@ import { Link } from "react-router-dom";
 import { Context } from "../store/appContext";
 import "../../styles/login.css";
 
-export const Recover = () => {
-	const [email, setEmail] = useState('')
-	const {actions, store} = useContext(Context)
+export const Reset = () => {
+	const [password, setPassword] = useState('')
+	const {actions} = useContext(Context)
 	
 	function sendData(e){
 		e.preventDefault()
-		// actions.signup(email, user_name ,password);
+		// actions.sendEmail(email);
 	}
 
 	return (
@@ -19,7 +19,7 @@ export const Recover = () => {
 					<div className="wrap-login100">
 						<form className="login100-form validate-form" onSubmit={sendData}>
 							<span className="login100-form-title p-b-26">
-								Recover Password
+								Reset Password
 							</span>
 							<span className="login100-form-title p-b-48">
 								<i className="zmdi zmdi-font"></i>
@@ -47,7 +47,7 @@ export const Recover = () => {
 									Do you wanna try again? 
 								</span>
 								<Link to="/login" className="txt2 ms-2">
-										<strong>Login</strong>
+									<strong>Login</strong>
 								</Link>
 							</div>
 						</form>

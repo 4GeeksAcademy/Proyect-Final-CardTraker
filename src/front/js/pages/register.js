@@ -79,20 +79,16 @@ export const Register = () => {
 								<span className="txt1">
 									You have an account? 
 								</span>
-								<Link to="/login">
-									<a className="txt2 ms-2">
+								<Link to="/login" className="txt2 ms-2" onClick={store.flashMessageRegister=null}>
 										<strong>Login</strong>
-									</a>
 								</Link>
 							</div>
 							<div className="text-center">
 								<span className="txt1">
 									Forgot your password? 
 								</span>
-								<Link to="/reset_password">
-									<a className="txt2 ms-2">
+								<Link to="/reset_password" className="txt2 ms-2" onClick={store.flashMessageRegister=null}>
 										<strong>Recover Password</strong>
-									</a>
 								</Link>
 							</div>
 						</form>
