@@ -4,6 +4,7 @@ from api.utils import generate_sitemap, APIException
 from flask_jwt_extended import create_access_token, get_jwt_identity, jwt_required
 from flask_login import login_required, current_user
 from flask_mail import Message
+import random, string
 # from app import mail
 
 api = Blueprint('api', __name__)
@@ -65,9 +66,10 @@ def login():
         "access_token":access_token,
         "user":user.serialize()
         })
+
 #Funcion que manda el correo.
 def send_reset_email (user):
-    token = user.get_reset_token()
+    token = user.token
     msg = Message('Password reset request', 
                 sender='noreply@demo.com',
                 recipients=[user.email])
@@ -75,7 +77,14 @@ def send_reset_email (user):
 {url_for('reset_token',token=token,_externar=True)}
 Si tu no hiciste este requerimiento por favor ignora este mensaje.
     '''
-    mail.send(msg)
+    # mail.send(msg)
+
+#Funcion genera Token random
+def get_random_token():
+    source = string.ascii_letters + string.digits
+    token = ''.join((random.choice(source) for i in range(24)))
+    print(token)
+    return token
 
 #Solicitud de cambio de contrasena
 @api.route("/request_reset", methods=["GET","POST"])

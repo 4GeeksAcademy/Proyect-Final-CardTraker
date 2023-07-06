@@ -5,7 +5,7 @@ import "../../styles/login.css";
 
 export const Request = () => {
 	const [email, setEmail] = useState('')
-	const {actions, store} = useContext(Context)
+	const {actions} = useContext(Context)
 	
 	function sendData(e){
 		e.preventDefault()

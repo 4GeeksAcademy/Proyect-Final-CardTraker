@@ -113,7 +113,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 						}
 					)
 				};
-				fetch(process.env.BACKEND_URL+ "/api/request_reset", requestOptions)
+				fetch(process.env.BACKEND_URL+"/api/request_reset", requestOptions)
 					.then(response => response.json())
 					.then(data => {
 						if (data.msg) {
