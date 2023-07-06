@@ -1,4 +1,5 @@
 from flask import Flask, request, jsonify, url_for, Blueprint
+from sqlalchemy import or_
 from api.models import db, User, Stablishments
 from api.utils import generate_sitemap, APIException
 from flask_jwt_extended import create_access_token, get_jwt_identity, jwt_required
@@ -63,14 +64,39 @@ def protected():
 if __name__ == "__main__":
     api.run()
 
-@api.route('/hello', methods=['GET'])
-def handle_hello():
+@api.route('/stablishments', methods=['GET'])
+def get_all_stablishments():
     all_stablishments = Stablishments.query.all()
     print(all_stablishments)
-    result = map(lambda stablishment_name: stablishment_name.serialize(), all_stablishments)
-    print(result)
-    print(list(result))
-    response_body = {
-        "message": "Hello!"
-    }
-    return jsonify(response_body), 200    
+    result = list(map(lambda item: item.serialize(), all_stablishments))
+    return jsonify(result), 200
+
+@api.route('/stablishments', methods=['POST']) 
+def create_stablishment():
+    name = request.get_json()["name"]
+    link = request.get_json()["link"]
+    record_exist = Stablishments.query.filter(or_(Stablishments.stablishments_name == name, Stablishments.stablishments_links == link) ).first()
+    if record_exist is None: 
+        new_stablishment = Stablishments (stablishments_name = name, stablishments_links = link, status = True)
+        db.session.add(new_stablishment)
+        db.session.commit()
+    
+        return jsonify({"msg" : "el establecimiento agregado con exito"}), 200
+    
+    else: 
+        return jsonify({"msg" : "el establecimeinto ya existe"}), 409
+    
+@api.route('/stablishments/<int:stablishments_id>', methods=['DELETE'])
+def delete_stablishments(stablishments_id):
+    stablishments = Stablishments.query.get(stablishments_id)
+    db.session.delete(stablishments)
+    db.session.commit()
+    return jsonify({"msg" : "The stablishment has been deleted"}), 100
+    
+
+        
+    
+    
+
+
+

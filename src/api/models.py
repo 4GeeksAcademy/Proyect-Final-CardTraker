@@ -32,5 +32,6 @@ class Stablishments(db.Model):
     def serialize(self):
         return {
             "id": self.id,
-            "stablishment": self.stablishments_name,
+            "stablishments": self.stablishments_name,
+            
         }         
