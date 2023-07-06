@@ -17,6 +17,7 @@ export const Home = () => {
 				{store.message || "Loading message from the backend (make sure your python backend is running)..."}
 			</div>
 			<Link to="/login"><button className="btn btn-primary">Login</button></Link>
+			<Link to="/register"><button className="btn btn-info">Register</button></Link>
 			<p>
 				This boilerplate comes with lots of documentation:{" "}
 				<a href="https://start.4geeksacademy.com/starters/react-flask">
