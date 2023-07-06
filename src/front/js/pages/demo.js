@@ -51,6 +51,6 @@ export const Demo = () => {
 					Logout
 			</button>
 		</div>
-		: "Su tiempo de acceso ha finalizado.")
+		: alert("Usted no tiene acceso a esta vista."))
 	);
 };

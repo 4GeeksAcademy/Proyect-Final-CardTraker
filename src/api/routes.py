@@ -1,4 +1,4 @@
-from flask import Flask, request, jsonify, url_for, Blueprint
+from flask import Flask, request, jsonify, url_for, Blueprint, flash
 from api.models import db, User, Cards
 from api.utils import generate_sitemap, APIException
 from flask_jwt_extended import create_access_token, get_jwt_identity, jwt_required, decode_token
@@ -19,15 +19,17 @@ def sign_up():
         db.session.commit()
 
         response_body = {
-            "message": "Se creo un nuevo usuario con exito."
+            "message": "Se creo un nuevo usuario con existo.",
+            "flash_message": "Se ha creado usuario con exito"
         }
         return jsonify(response_body), 200
     
-    response_body = {
-            "message": "Ya existe el usuario que intenta crear"
-        }
-    return jsonify(response_body), 200
 
+    response_body = {
+            "message": "Ya existe el usuario que intenta crear",
+            "flash_message": "Ya existe este usuario"
+        }
+    return jsonify(response_body), 401
 
 #Recupera todos los usuarios creados.
 @api.route('/user', methods=['GET'])
@@ -46,27 +48,43 @@ def getid(token):
     return user_id
 
 #Autenticacion.
+# Elimina un usuario registrado
+@api.route('/user/<int:user_id>', methods=['DELETE'])
+# @login_required
+def delete_user(user_id):
+    user = User.query.filter_by(id=user_id).first()
+    db.session.delete(user)
+    db.session.commit()
+
+    return jsonify({'message': 'The user has been succesfully deleted'}),200
+
+# LOGIN Autenticacion.
 @api.route("/login", methods=["POST"])
 def login():
     email = request.json.get("email", None)
     password = request.json.get("password", None)
     user = User.query.filter_by(email=email).first() #Valida que existe un usuario en la base de datos que estoy manejando
     
-    if user == None:
-        return jsonify({"msg": "Incorrect username or password"}), 401
-    
-    if email != user.email or password != user.password:
+    if user is None or email != user.email or password != user.password:
+        flash("Incorrect username or password", "error")
         return jsonify({"msg": "Incorrect username or password"}), 401
     
     access_token = create_access_token(identity=email)
-    print(access_token)
-
-    user_id = getid(access_token)
-    print(user_id)
-
     return jsonify({
-        "access_token":access_token
+        "access_token":access_token,
+        "user":user.serialize()
         })
+
+#Recuperacion de la contraseña
+@api.route("/reset_password", methods=["GET","POST"])
+def reset_request():
+    email = request.json.get("email", None)
+    user = User.query.filter_by(email=email).first()
+    if user :
+        flash('Se ha mandado el correo, revisa tu bandeja de entrada.',)
+        # send_mail();
+
+
 
 # Protect a route with jwt_required, which will kick out requests
 # without a valid JWT present.
