@@ -1,3 +1,4 @@
+from ssl import ALERT_DESCRIPTION_ACCESS_DENIED
 from flask import Flask, request, jsonify, url_for, Blueprint, flash, redirect
 from api.models import db, User
 from api.utils import generate_sitemap, APIException
@@ -8,6 +9,8 @@ import random, string
 # from app import mail
 
 api = Blueprint('api', __name__)
+
+# //////////////////////LOGIN & REGISTRO/////////////////////////
 
 #Creacion de usuario, Registro
 @api.route('/signup' , methods=['POST'])
@@ -67,6 +70,10 @@ def login():
         "user":user.serialize()
         })
 
+
+# //////////////////////RECUPERACION DE CONTRASENA/////////////////////////
+
+
 #Funcion que manda el correo.
 def send_reset_email (user):
     token = user.token
@@ -83,7 +90,6 @@ Si tu no hiciste este requerimiento por favor ignora este mensaje.
 def get_random_token():
     source = string.ascii_letters + string.digits
     token = ''.join((random.choice(source) for i in range(24)))
-    print(token)
     return token
 
 #Solicitud de cambio de contrasena
@@ -94,21 +100,41 @@ def reset_request():
     email = request.json.get("email", None)
     user = User.query.filter_by(email=email).first()
     if user is None:
-        flash('No existe este usuario, debe registrarse primero.')
-        return jsonify({"msg": "Incorrect username or password"}), 401
+        response_body = {
+            "message": "No existe ese usuario.",
+            "flash_message": "No existe este usuario, debe registrarse primero."
+        }
+        return jsonify(response_body), 401
+    token = get_random_token()
+    user.token = token  # Set the token value for the user
+    db.session.commit()  # Commit the changes to the database
     # send_reset_email(user)
-    flash('Se ha sido enviado un correo con instrucciones para cambiar su contraseña.','info')
-    return jsonify({"user":user.serialize()}), 200
+    response_body = {
+            "message": "Correo enviado con exito.",
+            "flash_message": "Ha sido enviado un correo a su email."
+        }
+    return jsonify(response_body), 200
 
-#Recuperacion de la contraseña
-# @api.route("/reset_password/<token>", methods=["GET","POST"])
-# def reset_token(token):
-#     if current_user.is_authenticated:
-#         return redirect(url_for('home'))
-#     user = User.verify_reset_token(token)
-#     if user is None:
-#         flash('Tu token esta inavilidado.','warning')
-#         return redirect(url_for('reset_request'))
+# Validacion del Token
+@api.route("/validate_token/<token>", methods=["GET"])
+def validate_token(token):
+    user = User.query.filter_by(token=token).first()
+    if user is None:
+        # flash('Tu token esta inavilidado.','warning')
+        return jsonify({"valid_token": False}), 401
+    return jsonify({"valid_token": True}), 200
+
+# Recuperacion de la contrasena
+@api.route("/request_reset/<token>", methods=["GET", "POST"])
+def reset_password(token):
+    user = User.query.filter_by(token=token).first()
+    if user is None:
+        flash("Invalid token.")
+        return jsonify({"msg": "Invalid token."}), 401
+    else:
+        # Continue with password reset logic
+        # ...
+        pass
 
 # Protect a route with jwt_required, which will kick out requests
 # without a valid JWT present.

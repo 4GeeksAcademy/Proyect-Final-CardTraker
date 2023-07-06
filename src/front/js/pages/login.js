@@ -64,7 +64,7 @@ export const Login = () => {
 							<span className="txt1">
 								Don’t have an account? 
 							</span>
-							<Link to="/register" className="txt2 ms-2">
+							<Link to="/register" className="txt2 ms-2" onClick={store.flashMessage=null}>
 									<strong>Sign Up</strong>
 							</Link>
 						</div>
@@ -72,7 +72,7 @@ export const Login = () => {
 							<span className="txt1">
 								Forgot your password? 
 							</span>
-							<Link to="/request_reset" className="txt2 ms-2">
+							<Link to="/request_reset" className="txt2 ms-2" onClick={store.flashMessage=null}>
 									<strong>Recover Password</strong>
 							</Link>
 						</div>

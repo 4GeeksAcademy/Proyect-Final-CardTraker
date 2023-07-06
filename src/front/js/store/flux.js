@@ -17,7 +17,8 @@ const getState = ({ getStore, getActions, setStore }) => {
 			auth: false,
 			admin: false,
 			flashMessage: null,
-			flashMessageRegister: null
+			flashMessageRegister: null,
+			valid_token: null,
 		},
 		actions: {
 			login: (email,password) => {
@@ -114,13 +115,45 @@ const getState = ({ getStore, getActions, setStore }) => {
 					)
 				};
 				fetch(process.env.BACKEND_URL+"/api/request_reset", requestOptions)
-					.then(response => response.json())
-					.then(data => {
-						if (data.msg) {
-							setStore({flashMessage:data.msg});
-						}
-						console.log(data)
+				.then(response => {
+					return response.json().then(data => {
+					if (response.ok) {
+						return { status: response.status, data: data };
+					} else {
+						throw { status: response.status, data: data };
+					}
 					});
+				})
+				  .then(({ status, data }) => {
+					if (data.flash_message) {
+					setStore({ flashMessage: data.flash_message });
+					}
+					if (status === 200) {
+						setStore({ flashMessage: data.flash_message });
+					  }
+				  })
+				.catch(error => {
+				console.error('Error:', error);
+				if (error.status === 401) {
+					if (error.data.flash_message) {
+					setStore({ flashMessage: error.data.flash_message });
+					}
+				}})
+			},
+			
+			validateToken: (token) => {
+				var requestOptions = {method: 'GET'};
+				  fetch(process.env.BACKEND_URL+"/api/validate_token/"+token, requestOptions)
+					.then(response => {
+						if( response.status === 200 ){
+							setStore({ valid_token: true });
+							} else {
+								setStore({ valid_token: false });
+							}
+						return response.json()
+					})
+					.then(data => console.log(data))
+					.catch(error => console.log('error', error));
 			},
 
 			getMessage: async () => {
