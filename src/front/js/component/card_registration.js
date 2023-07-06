@@ -16,6 +16,10 @@ const CardReg =()=>{
        actions.addCard(provider, lastFour, bankName, userID)
     }
 
+    function getUser(e){
+        e.preventDefault()
+        actions.getUserID()
+    }
 
 	return (
     <form>
@@ -46,6 +50,7 @@ const CardReg =()=>{
             onChange={(e)=>setUserID(e.target.value)}/>
         </div>
         <button type="submit" className="btn btn-primary" onClick={createCard}>Add Card</button>
+        <button className="btn btn-primary" onClick={getUser}>Get User</button>
     </form>)
     
 };

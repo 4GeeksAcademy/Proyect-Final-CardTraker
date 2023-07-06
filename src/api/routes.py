@@ -1,7 +1,9 @@
 from flask import Flask, request, jsonify, url_for, Blueprint
 from api.models import db, User, Cards
 from api.utils import generate_sitemap, APIException
-from flask_jwt_extended import create_access_token, get_jwt_identity, jwt_required
+from flask_jwt_extended import create_access_token, get_jwt_identity, jwt_required, decode_token
+import jwt
+
 
 api = Blueprint('api', __name__)
 
@@ -34,6 +36,15 @@ def get_users():
     result = list(map(lambda item: item.serialize(), all_users))
     return jsonify(result), 200
 
+#Decodifica el codigo para obtener el ID
+def getid(token):
+    decoded_token = decode_token(token)
+    user_email = decoded_token["sub"]
+    print(user_email)
+    user = User.query.filter_by(email=user_email).first()
+    user_id = user.id
+    return user_id
+
 #Autenticacion.
 @api.route("/login", methods=["POST"])
 def login():
@@ -49,11 +60,13 @@ def login():
     
     access_token = create_access_token(identity=email)
     print(access_token)
+
+    user_id = getid(access_token)
+    print(user_id)
+
     return jsonify({
-        "access_token":access_token,
-        "user":user.serialize()
+        "access_token":access_token
         })
-   
 
 # Protect a route with jwt_required, which will kick out requests
 # without a valid JWT present.

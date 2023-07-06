@@ -86,6 +86,12 @@ const getState = ({ getStore, getActions, setStore }) => {
 
 			},
 
+			getUserID: () =>{
+				let token = localStorage.getItem("token") // tengo el token codificado del usuario logeado.
+				console.log(token)
+				// getid(token)
+			},
+
 			getMessage: async () => {
 				try{
 					// fetching data from the backend
