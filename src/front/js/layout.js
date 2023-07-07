@@ -9,6 +9,7 @@ import { Single } from "./pages/single";
 import { Login } from "./pages/login";
 import { Register } from "./pages/register";
 import { Recover } from "./pages/password_form";
+import { CardReg } from "./pages/card_registration";
 import injectContext from "./store/appContext";
 
 import { Navbar } from "./component/navbar";
@@ -34,6 +35,7 @@ const Layout = () => {
                         <Route element={<Register />} path="/register" />
                         <Route element={<Recover />} path="/reset_password" />
                         <Route element={<Single />} path="/single/:theid" />
+                        <Route element={<CardReg />} path="/card_registration" />
                         <Route element={<h1>Not found!</h1>} />
                     </Routes>
                     <Footer />

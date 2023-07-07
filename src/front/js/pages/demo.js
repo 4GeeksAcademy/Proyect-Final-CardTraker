@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useContext } from "react";
 import { Link, Navigate, useNavigate } from "react-router-dom";
-import CardReg from "../component/card_registration";
+
 
 
 import { Context } from "../store/appContext";
@@ -20,7 +20,6 @@ export const Demo = () => {
 		(store.auth === true ?  
 			
 		<div className="container">
-			<CardReg/>
 			<ul className="list-group">
 				{store.demo.map((item, index) => {
 					return (
@@ -48,6 +47,9 @@ export const Demo = () => {
 			<br />
 			<Link to="/">
 				<button className="btn btn-primary">Back home</button>
+			</Link>
+			<Link to="/card_registration">
+				<button className="btn btn-primary">Register New Card</button>
 			</Link>
 			<button 
 				className="btn btn-danger float-end" 
