@@ -18,7 +18,8 @@ const getState = ({ getStore, getActions, setStore }) => {
 			admin: false,
 			flashMessage: null,
 			flashMessageRegister: null,
-			valid_token: null,
+			flashMessagePassword: null,
+			valid_token: true,
 		},
 		actions: {
 			login: (email,password) => {
@@ -93,7 +94,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 					}})
 				},
 
-			delete_contact: (id) => {
+			delete_user: (id) => {
 				const requestOptions = {
 					method: 'DELETE'
 				  };
@@ -140,20 +141,52 @@ const getState = ({ getStore, getActions, setStore }) => {
 					}
 				}})
 			},
+
+			validateToken: async (token) => {
+				try {
+					const response = await fetch(process.env.BACKEND_URL +`/api/validate_token/${token}`);
+					const data = await response.json();
+					setStore({ valid_token: data.valid_token })
+				} catch (error) {
+					console.log("Error loading message from backend", error)
+				}
+			},
 			
-			validateToken: (token) => {
-				var requestOptions = {method: 'GET'};
-				  fetch(process.env.BACKEND_URL+"/api/validate_token/"+token, requestOptions)
+			resetPassword: (password, token) => {
+				const requestOptions = {
+					method: 'POST',
+					headers: { 'Content-Type':'application/json'},
+					body: JSON.stringify(
+						{
+							"password": password
+						}
+					)
+				};
+				fetch(process.env.BACKEND_URL+"api/request_reset/"+token, requestOptions)
 					.then(response => {
-						if( response.status === 200 ){
-							setStore({ valid_token: true });
-							} else {
-								setStore({ valid_token: false });
-							}
-						return response.json()
+						return response.json().then(data => {
+						if (response.ok) {
+							return { status: response.status, data: data };
+						} else {
+							throw { status: response.status, data: data };
+						}
+						});
 					})
-					.then(data => console.log(data))
-					.catch(error => console.log('error', error));
+				  	.then(({ status, data }) => {
+						if (data.flash_message) {
+						setStore({ flashMessagePassword: data.flash_message });
+						}
+						if (status === 200) {
+							setStore({ flashMessagePassword: data.flash_message });
+						  }
+				  	})
+					.catch(error => {
+					console.error('Error:', error);
+					if (error.status === 401) {
+						if (error.data.flash_message) {
+						setStore({ flashMessagePassword: error.data.flash_message });
+						}
+					}})
 			},
 
 			getMessage: async () => {
@@ -168,6 +201,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 					console.log("Error loading message from backend", error)
 				}
 			},
+
 			changeColor: (index, color) => {
 				//get the store
 				const store = getStore();

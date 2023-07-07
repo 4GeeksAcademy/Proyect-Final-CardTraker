@@ -1,4 +1,4 @@
-import React, { useContext, useState, useEffect } from "react";
+import React, { useContext, useState } from "react";
 import { Link, Navigate } from "react-router-dom";
 import { Context } from "../store/appContext";
 import "../../styles/login.css";
@@ -40,9 +40,6 @@ export const Login = () => {
 							<span className="focus-input100" data-placeholder="Email"></span>
 						</div>
 						<div className="wrap-input100 validate-input" data-validate="Enter password">
-							<span className="btn-show-pass">
-								<i className="zmdi zmdi-eye"></i>
-							</span>
 							<input 
 								value={password} 
 								onChange={(e)=>setPassword(e.target.value)} 

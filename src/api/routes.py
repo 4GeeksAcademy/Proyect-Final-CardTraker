@@ -4,9 +4,9 @@ from api.models import db, User
 from api.utils import generate_sitemap, APIException
 from flask_jwt_extended import create_access_token, get_jwt_identity, jwt_required
 from flask_login import login_required, current_user
-from flask_mail import Message
-import random, string
-# from app import mail
+from flask_mail import Message 
+import random, string, os
+from extensions import mail
 
 api = Blueprint('api', __name__)
 
@@ -81,10 +81,13 @@ def send_reset_email (user):
                 sender='noreply@demo.com',
                 recipients=[user.email])
     msg.body = f'''To reset your password visit the following link:
-{url_for('reset_token',token=token,_externar=True)}
+
+{os.getenv('FRONTEND_URL')+"reset_password/"+token}
+
 Si tu no hiciste este requerimiento por favor ignora este mensaje.
     '''
-    # mail.send(msg)
+    mail.send(msg)
+    return 200
 
 #Funcion genera Token random
 def get_random_token():
@@ -95,8 +98,6 @@ def get_random_token():
 #Solicitud de cambio de contrasena
 @api.route("/request_reset", methods=["GET","POST"])
 def reset_request():
-    # if current_user.is_authenticated:
-    #     return redirect(url_for('home'))
     email = request.json.get("email", None)
     user = User.query.filter_by(email=email).first()
     if user is None:
@@ -108,12 +109,15 @@ def reset_request():
     token = get_random_token()
     user.token = token  # Set the token value for the user
     db.session.commit()  # Commit the changes to the database
-    # send_reset_email(user)
-    response_body = {
-            "message": "Correo enviado con exito.",
-            "flash_message": "Ha sido enviado un correo a su email."
-        }
-    return jsonify(response_body), 200
+    
+    resp = send_reset_email(user)
+    if resp == 200:
+        response_body = {
+                "message": "Correo enviado con exito.",
+                "flash_message": "Un correo ha sido enviado a su email."
+            }
+        return jsonify(response_body), 200
+    return "Error al enviar el correo."
 
 # Validacion del Token
 @api.route("/validate_token/<token>", methods=["GET"])
@@ -132,9 +136,15 @@ def reset_password(token):
         flash("Invalid token.")
         return jsonify({"msg": "Invalid token."}), 401
     else:
-        # Continue with password reset logic
-        # ...
-        pass
+        password = request.json.get("password", None)
+        user.password = password
+        user.token = ''
+        db.session.commit()  # Commit the changes to the database  
+        response_body = {
+                "message": "Su contraseña ha sido cambiada con exito.",
+                "flash_message": "Su contraseña ha sido cambiada con exito."
+            }
+        return jsonify(response_body), 200
 
 # Protect a route with jwt_required, which will kick out requests
 # without a valid JWT present.

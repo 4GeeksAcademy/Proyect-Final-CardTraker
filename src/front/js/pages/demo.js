@@ -12,8 +12,6 @@ export const Demo = () => {
 		navigate("/")
 	}
 
-	console.log(store.auth)
-
 	return (
 		(store.auth === true ?  
 		<div className="container">

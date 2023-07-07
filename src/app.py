@@ -9,7 +9,7 @@ from api.routes import api
 from api.admin import setup_admin
 from api.commands import setup_commands
 from flask_jwt_extended import JWTManager
-from flask_mail import Mail
+from extensions import mail
 
 #from models import Person
 
@@ -37,13 +37,14 @@ app.config["JWT_SECRET_KEY"] = "CardTrackers2023"
 jwt = JWTManager(app)
 
 #Mail Server and Port
-app.config['MAIL_SERVER']='smtp.gmail.com'
-app.config['MAIL_PORT'] = 465
-app.config['MAIL_USERNAME'] = 'germanebarbosa5@gmail.com'
-app.config['MAIL_PASSWORD'] = 'Gebr.7177671'
-app.config['MAIL_USE_TLS'] = False
-app.config['MAIL_USE_SSL'] = True
-mail = Mail(app)
+app.config['MAIL_SERVER']='sandbox.smtp.mailtrap.io'
+app.config['MAIL_PORT'] = 2525
+app.config['MAIL_USERNAME'] = '4ce82a2d27e9f2'
+app.config['MAIL_PASSWORD'] = '43721c6aea5f29'
+app.config['MAIL_USE_TLS'] = True
+app.config['MAIL_USE_SSL'] = False
+
+mail.init_app(app)
 
 # add the admin
 setup_admin(app)

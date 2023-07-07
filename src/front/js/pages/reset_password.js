@@ -1,5 +1,5 @@
 import React, { useContext, useState, useEffect  } from "react";
-import { Link, useParams} from "react-router-dom";
+import { Link, useParams, Navigate} from "react-router-dom";
 import { Context } from "../store/appContext";
 import "../../styles/login.css";
 
@@ -12,21 +12,24 @@ export const Reset = () => {
 	useEffect(() => {
 		actions.validateToken(token);
 	  }, []);
-	console.log(token)
-
-	console.log(store.valid_token)
 
 	function sendData(e){
 		e.preventDefault()
-		// actions.sendEmail(email);
+		if (password == confrimPassword){
+			let newPassword = password
+			actions.resetPassword(newPassword,token);
+		} else alert("Las contraseñas no coinciden.")
 	}
 
 	return (
-		(store.valid_token === true ?
+		(store.valid_token === false ? <Navigate to='/'/>:
 		<>
 			<div className="limiter">
 				<div className="container-login100">
 					<div className="wrap-login100">
+					{store.flashMessagePassword && (
+						<div className="flash-success-message">{store.flashMessagePassword}</div>
+					)}
 						<form className="login100-form validate-form" onSubmit={sendData}>
 							<span className="login100-form-title p-b-26">
 								Reset Password
@@ -35,9 +38,6 @@ export const Reset = () => {
 								<i className="zmdi zmdi-font"></i>
 							</span>
 							<div className="wrap-input100 validate-input" data-validate="Enter password">
-								<span className="btn-show-pass">
-									<i className="zmdi zmdi-eye"></i>
-								</span>
 								<input 
 									value={password} 
 									onChange={(e)=>setPassword(e.target.value)} 
@@ -48,9 +48,6 @@ export const Reset = () => {
 								<span className="focus-input100" data-placeholder="Password"></span>
 							</div>
 							<div className="wrap-input100 validate-input" data-validate="Enter password">
-								<span className="btn-show-pass">
-									<i className="zmdi zmdi-eye"></i>
-								</span>
 								<input 
 									value={confrimPassword} 
 									onChange={(e)=>setConfirmPassword(e.target.value)} 
@@ -81,6 +78,6 @@ export const Reset = () => {
 				</div>
 			</div>
 		</>
-		: alert("Su token no es valido."))
+		)
 	);
 };
