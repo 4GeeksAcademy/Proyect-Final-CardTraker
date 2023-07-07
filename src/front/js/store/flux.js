@@ -13,12 +13,94 @@ const getState = ({ getStore, getActions, setStore }) => {
 					background: "white",
 					initial: "white"
 				}
-			]
+			],
+			auth: false,
+			admin: false,
+			flashMessage: null,
+			flashMessageRegister: null
 		},
 		actions: {
-			// Use getActions to call a function within a fuction
-			exampleFunction: () => {
-				getActions().changeColor(0, "green");
+			login: (email,password) => {
+				const requestOptions = {
+					method: 'POST',
+					headers: { 'Content-Type':'application/json'},
+					body: JSON.stringify(
+						{
+							"email": email,
+							"password": password
+						}
+					)
+				};
+				fetch(process.env.BACKEND_URL+ "/api/login", requestOptions)
+					.then(response => {
+						if( response.status === 200 ){
+								setStore({auth: true}) // Modifico el valor de la variable auth.
+								setStore({flashMessage:null})
+							}
+						return response.json()
+					})
+					.then(data => {
+						if (data.msg) {
+							setStore({flashMessage:data.msg});
+						}
+						localStorage.setItem("token", data.access_token)
+						console.log(data)
+					});
+			},
+
+			logout:() => {
+				setStore({auth: false}) 
+				localStorage.removeItem("token")
+			},
+
+			signup: (email,user_name,password) => {
+				const requestOptions = {
+					method: 'POST',
+					headers: { 'Content-Type':'application/json'},
+					body: JSON.stringify(
+						{
+							"email": email,
+							"user_name": user_name,
+							"password": password
+						}
+					)
+				};
+				fetch(process.env.BACKEND_URL +"/api/signup", requestOptions)
+					.then(response => {
+						return response.json().then(data => {
+						if (response.ok) {
+							return { status: response.status, data: data };
+						} else {
+							throw { status: response.status, data: data };
+						}
+						});
+					})
+				  	.then(({ status, data }) => {
+						if (data.flash_message) {
+						setStore({ flashMessageRegister: data.flash_message });
+						}
+						if (status === 200) {
+							setStore({ flashMessageRegister: data.flash_message });
+						  }
+				  	})
+					.catch(error => {
+					console.error('Error:', error);
+					if (error.status === 401) {
+						if (error.data.flash_message) {
+						setStore({ flashMessageRegister: error.data.flash_message });
+						}
+					}})
+				},
+
+			delete_contact: (id) => {
+				const requestOptions = {
+					method: 'DELETE'
+				  };
+				  
+				  fetch(process.env.BACKEND_URL + "/api/user/" + id, requestOptions)
+					.then(response => response.json())
+					.then(result => console.log(result))
+					.catch(error => console.log('error', error));
 			},
 
 			getMessage: async () => {

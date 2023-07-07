@@ -1,12 +1,21 @@
 import React, { useState, useEffect, useContext } from "react";
-import { Link } from "react-router-dom";
+import { Link, Navigate, useNavigate } from "react-router-dom";
 
 import { Context } from "../store/appContext";
 
 export const Demo = () => {
 	const { store, actions } = useContext(Context);
+	const navigate = useNavigate()
+
+	function handle_logout() {
+		actions.logout()
+		navigate("/")
+	}
+
+	console.log(store.auth)
 
 	return (
+		(store.auth === true ?  
 		<div className="container">
 			<ul className="list-group">
 				{store.demo.map((item, index) => {
@@ -36,6 +45,12 @@ export const Demo = () => {
 			<Link to="/">
 				<button className="btn btn-primary">Back home</button>
 			</Link>
+			<button 
+				className="btn btn-danger float-end" 
+				onClick={()=>handle_logout()}>
+					Logout
+			</button>
 		</div>
+		: alert("Usted no tiene acceso a esta vista."))
 	);
 };

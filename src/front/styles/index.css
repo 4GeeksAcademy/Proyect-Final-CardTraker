@@ -1,8 +1,20 @@
-#navHome {
-    color: #DD356E;
-};
+body {
+    font-family: "Inconsolata", Arial, sans-serif;
+    font-weight: 400;
+    font-size: 18px;
+    line-height: 1.7;
+    color: #333333;
+    background: #fff;
+}
 
-#button1 {
-    display: flex;
-    margin-right: 10px;
+a {
+  color: #DD356E;
+  -webkit-transition: 0.5s;
+  -o-transition: 0.5s;
+  transition: 0.5s;
+}
+a:hover, a:active, a:focus {
+  color: #DD356E;
+  outline: none;
+  text-decoration: none;
 }
