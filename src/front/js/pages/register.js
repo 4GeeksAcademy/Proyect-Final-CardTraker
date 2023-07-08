@@ -55,9 +55,6 @@ export const Register = () => {
 								<span className="focus-input100" data-placeholder="User Name"></span>
 							</div>
 							<div className="wrap-input100 validate-input" data-validate="Enter password">
-								<span className="btn-show-pass">
-									<i className="zmdi zmdi-eye"></i>
-								</span>
 								<input 
 									value={password} 
 									onChange={(e)=>setPassword(e.target.value)} 
@@ -79,20 +76,16 @@ export const Register = () => {
 								<span className="txt1">
 									You have an account? 
 								</span>
-								<Link to="/login">
-									<a className="txt2 ms-2">
+								<Link to="/login" className="txt2 ms-2" onClick={store.flashMessageRegister=null}>
 										<strong>Login</strong>
-									</a>
 								</Link>
 							</div>
 							<div className="text-center">
 								<span className="txt1">
 									Forgot your password? 
 								</span>
-								<Link to="/reset_password">
-									<a className="txt2 ms-2">
+								<Link to="/request_reset" className="txt2 ms-2" onClick={store.flashMessageRegister=null}>
 										<strong>Recover Password</strong>
-									</a>
 								</Link>
 							</div>
 						</form>

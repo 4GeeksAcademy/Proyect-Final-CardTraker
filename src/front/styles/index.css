@@ -13,8 +13,19 @@ a {
   -o-transition: 0.5s;
   transition: 0.5s;
 }
+
 a:hover, a:active, a:focus {
   color: #DD356E;
   outline: none;
   text-decoration: none;
+}
+
+.boton{
+  background-color: #DD356E;
+  border: #DD356E;
+}
+
+.boton:hover{
+  background-color: #e35d8b;
+  border: #e35d8b;
 }
