@@ -43,14 +43,7 @@ def get_users():
     result = list(map(lambda item: item.serialize(), all_users))
     return jsonify(result), 200
 
-#Decodifica el codigo para obtener el ID
-def getid(token):
-    decoded_token = decode_token(token)
-    user_email = decoded_token["sub"]
-    print(user_email)
-    user = User.query.filter_by(email=user_email).first()
-    user_id = user.id
-    return user_id
+
 
 #Autenticacion.
 # Elimina un usuario registrado
@@ -165,8 +158,6 @@ def protected():
     current_user = get_jwt_identity()
     return jsonify(logged_in_as=current_user), 200
 
-if __name__ == "__main__":
-    api.run()
 
 #Llama todas las tarjetas OK
 @api.route('/cards', methods=['GET'])
@@ -185,15 +176,25 @@ def get_card(card_id):
 
     return jsonify(card.serialize()), 200
 
-#Crea una nueva tarjeta OK
 
+#Decodifica el codigo para obtener el ID
+def getid(token):
+    decoded_token = decode_token(token)
+    user_email = decoded_token["sub"]
+    print(user_email)
+    user = User.query.filter_by(email=user_email).first()
+    user_id = user.id
+    return user_id
+
+#Crea una nueva tarjeta OK
 @api.route('/cards', methods=['POST'])
-def create_new_card():
+def create_new_card():    
     
     print(request.get_json()["card_provider"])
-
+    token=request.json.get("token", None)
+    user_id=getid(token)
     card_body=request.get_json()
-    new_card=Cards(card_provider=card_body["card_provider"],last_four=card_body["last_four"], bank_name=card_body["bank_name"], card_user_id=card_body["card_user_id"])
+    new_card=Cards(card_provider=card_body["card_provider"],last_four=card_body["last_four"], bank_name=card_body["bank_name"], card_user_id=user_id)
     db.session.add(new_card)
     db.session.commit()
     
@@ -217,3 +218,23 @@ def delete_card(card_id):
 
     
     return jsonify(response_body)
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+if __name__ == "__main__":
+    api.run()

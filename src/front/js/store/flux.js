@@ -105,7 +105,8 @@ const getState = ({ getStore, getActions, setStore }) => {
 					.catch(error => console.log('error', error));
 			},
 //Agregar tarjeta a db desde componente de form
-			addCard:(card_provider,last_four,bank_name,card_user_id)=>{
+			addCard:(card_provider,last_four,bank_name)=>{
+				let token = localStorage.getItem("token")
 				const requestOptions = {
 					method: 'POST',
 					headers: {'Content-Type': 'application/json'},
@@ -114,7 +115,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 							"card_provider":card_provider,
 							"last_four":last_four,
 							"bank_name":bank_name,
-							"card_user_id":card_user_id 
+							"token":token
 						})
 					};
 				  
@@ -124,7 +125,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 					.then(result => console.log(result))
 					.catch(error => console.log('error', error));
 
-			},
+			},			
 
 			getUserID: () =>{
 				let token = localStorage.getItem("token") // tengo el token codificado del usuario logeado.

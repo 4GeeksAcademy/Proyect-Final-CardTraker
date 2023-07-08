@@ -54,12 +54,12 @@ export const CardReg = () => {
                     value={bankName}
                     onChange={(e)=>setBankName(e.target.value)}/>
                 </div>
-                <div className="form-group col-md-6">
+                {/* <div className="form-group col-md-6">
                     <label for="userID">User ID</label>
                     <input type="number" className="form-control" id="userID" placeholder="user ID" min="1"
                     value={userID}
                     onChange={(e)=>setUserID(e.target.value)}/>
-                </div>
+                </div> */}
                 <button type="submit" className="btn btn-primary" onClick={createCard}>Add Card</button>
                 <button className="btn btn-primary" onClick={getUser}>Get User</button>
             </form>)
