@@ -3,13 +3,13 @@ import { Link } from "react-router-dom";
 import { Context } from "../store/appContext";
 import "../../styles/login.css";
 
-export const Recover = () => {
+export const Request = () => {
 	const [email, setEmail] = useState('')
-	const {actions, store} = useContext(Context)
+	const {store, actions} = useContext(Context)
 	
 	function sendData(e){
 		e.preventDefault()
-		// actions.signup(email, user_name ,password);
+		actions.sendEmail(email);
 	}
 
 	return (
@@ -17,6 +17,13 @@ export const Recover = () => {
 			<div className="limiter">
 				<div className="container-login100">
 					<div className="wrap-login100">
+					{/* {store.flashMessage && (
+						<div className="flash-success-message">{store.flashMessage}</div>
+					)} */}
+					{store.flashMessage && (store.flashMessage === "No existe este usuario, debe registrarse primero." ? 
+						(<div className="flash-error-message">{store.flashMessage}</div>): 
+						(<div className="flash-success-message">{store.flashMessage}</div>)
+					)}
 						<form className="login100-form validate-form" onSubmit={sendData}>
 							<span className="login100-form-title p-b-26">
 								Recover Password
@@ -46,10 +53,8 @@ export const Recover = () => {
 								<span className="txt1">
 									Do you wanna try again? 
 								</span>
-								<Link to="/login">
-									<a className="txt2 ms-2">
+								<Link to="/login" className="txt2 ms-2" onClick={store.flashMessage=null}>
 										<strong>Login</strong>
-									</a>
 								</Link>
 							</div>
 						</form>
