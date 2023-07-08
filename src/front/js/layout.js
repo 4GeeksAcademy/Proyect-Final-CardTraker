@@ -1,9 +1,12 @@
 import React from "react";
-import { BrowserRouter, Route, Routes } from "react-router-dom";
+import { BrowserRouter, Route, Routes, Link } from "react-router-dom";
 import ScrollToTop from "./component/scrollToTop";
 import { BackendURL } from "./component/backendURL";
 
 import { Home } from "./pages/home";
+import { Contact } from "./pages/contact";
+import { Opportunities } from "./pages/opportunities";
+import { About } from "./pages/about";
 import { Demo } from "./pages/demo";
 import { Single } from "./pages/single";
 import { Login } from "./pages/login";
@@ -11,8 +14,9 @@ import { Register } from "./pages/register";
 import { Recover } from "./pages/password_form";
 import injectContext from "./store/appContext";
 
-import { Navbar } from "./component/navbar";
+// import { Navbar } from "./component/navbar";
 import { Footer } from "./component/footer";
+import { Header } from "./component/header";
 
 //create your first component
 const Layout = () => {
@@ -26,10 +30,12 @@ const Layout = () => {
         <div>
             <BrowserRouter basename={basename}>
                 <ScrollToTop>
-                    <Navbar />
+                    <Header />
                     <Routes>
                         <Route element={<Home />} path="/" />
-                        <Route element={<Demo />} path="/demo" />
+                        <Route element={<Contact />} path="/contact" />
+                        <Route element={<About />} path="/about" />
+                        <Route element={<Opportunities />} path="/opportunities" />
                         <Route element={<Login />} path="/login" />
                         <Route element={<Register />} path="/register" />
                         <Route element={<Recover />} path="/reset_password" />

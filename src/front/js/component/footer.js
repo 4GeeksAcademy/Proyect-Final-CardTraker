@@ -3,28 +3,20 @@ import { Link } from "react-router-dom"
 
 export const Footer = () => (
 	<footer className="footer mt-auto py-3 text-center">
-		<a className="icon-link" href="#">
+		<Link className="icon-link" to="/">
 			Home
-		</a>
+		</Link>
 		<span> | </span>
-		<a className="icon-link" href="#">
+		<Link className="icon-link" to="/about">
 			About
-		</a>
+		</Link>
 		<span> | </span>
-		<a className="icon-link" href="#">
+		<Link className="icon-link" to="/contact">
 			Contact
-		</a>
+		</Link>
 		<span> | </span>
-		<a className="icon-link" href="#">
+		<a className="icon-link" href="/opportunities">
 			Opportunities
-		</a>
-		<span> | </span>
-		<a className="icon-link" href="#">
-			Register
-		</a>
-		<span> | </span>
-		<a className="icon-link" href="#">
-			Log in
 		</a>
 	</footer>
 );

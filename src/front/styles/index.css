@@ -7,13 +7,13 @@ body {
     background: #fff;
 }
 
-a {
+a, Link {
   color: #DD356E;
   -webkit-transition: 0.5s;
   -o-transition: 0.5s;
   transition: 0.5s;
 }
-a:hover, a:active, a:focus {
+a:hover, a:active, a:focus, Link:hover, Link:active, Link:focus {
   color: #DD356E;
   outline: none;
   text-decoration: none;
