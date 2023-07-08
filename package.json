@@ -73,10 +73,13 @@
 		]
 	},
 	"dependencies": {
+		"@cloudinary/url-gen": "^1.10.1",
+		"cloudinary": "^1.37.3",
 		"prop-types": "^15.6.1",
-		"react": "^16.8.4",
-		"react-dom": "^16.8.4",
+		"react": "^16.14.0",
+		"react-dom": "^16.14.0",
 		"react-polyfills": "0.0.1",
-		"react-router-dom": "^6.3.0"
+		"react-router-dom": "^6.3.0",
+		"reactstrap": "^9.2.0"
 	}
 }
