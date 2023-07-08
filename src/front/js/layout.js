@@ -8,7 +8,6 @@ import { Demo } from "./pages/demo";
 import { Single } from "./pages/single";
 import { Login } from "./pages/login";
 import { Register } from "./pages/register";
-import { Recover } from "./pages/password_form";
 import { CardReg } from "./pages/card_registration";
 import { Request } from "./pages/request_reset";
 import { Reset } from "./pages/reset_password";

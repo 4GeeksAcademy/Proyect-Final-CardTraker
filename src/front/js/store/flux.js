@@ -213,7 +213,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 						if (error.data.flash_message) {
 						setStore({ flashMessagePassword: error.data.flash_message });
 						}
-					}})
+					}})},
 			
 
 			getMessage: async () => {

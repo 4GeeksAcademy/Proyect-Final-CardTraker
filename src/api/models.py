@@ -10,6 +10,7 @@ class User(db.Model):
     password = db.Column(db.String(80), unique=False, nullable=False)
     is_admin = db.Column(db.Boolean(), unique=False, nullable=False)
     token = db.Column(db.String(60), nullable=True, default='')
+    cards = db.relationship('Cards', backref='user', lazy=True)
 
     def __repr__(self):
         return f'<User {self.email}>'
