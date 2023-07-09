@@ -21,3 +21,22 @@ class User(db.Model):
             "user name": self.user_name,
             # do not serialize the password, its a security breach
         }
+    
+class New(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    name = db.Column(db.String(120), unique=True, nullable=False)
+    date = db.Column(db.String(120), unique=True, nullable=False)
+    tittle = db.Column(db.String(120), unique=True, nullable=False)
+    text = db.Column(db.String(500), unique=True, nullable=False)
+
+    def __repr__(self):
+        return f'<New {self.id}>'
+
+    def serialize(self):
+        return {
+            "id": self.id,
+            "name": self.name,
+            "date": self.date,
+            "date": self.tittle,
+            "text": self.text,
+        }
