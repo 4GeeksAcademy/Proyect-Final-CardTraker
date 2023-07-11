@@ -1,8 +1,8 @@
 from ssl import ALERT_DESCRIPTION_ACCESS_DENIED
 from flask import Flask, request, jsonify, url_for, Blueprint, flash, redirect
-from api.models import db, User
+from api.models import db, User, Cards
 from api.utils import generate_sitemap, APIException
-from flask_jwt_extended import create_access_token, get_jwt_identity, jwt_required
+from flask_jwt_extended import create_access_token, get_jwt_identity, jwt_required, decode_token
 from flask_login import login_required, current_user
 from flask_mail import Message 
 import random, string, os
@@ -43,6 +43,9 @@ def get_users():
     result = list(map(lambda item: item.serialize(), all_users))
     return jsonify(result), 200
 
+
+
+#Autenticacion.
 # Elimina un usuario registrado
 @api.route('/user/<int:user_id>', methods=['DELETE'])
 @login_required
@@ -154,6 +157,84 @@ def protected():
     # Access the identity of the current user with get_jwt_identity
     current_user = get_jwt_identity()
     return jsonify(logged_in_as=current_user), 200
+
+
+#Llama todas las tarjetas OK
+@api.route('/cards', methods=['GET'])
+def get_cards():
+    all_cards = Cards.query.all()
+    print(all_cards)
+    result = list(map(lambda card: card.serialize() ,all_cards))
+    print(result)    
+
+    return jsonify(result), 200
+
+#Llama una sola tarjeta OK
+@api.route('/cards/<int:card_id>', methods=['GET'])
+def get_card(card_id):
+    card=Cards.query.filter_by(id=card_id).first()
+
+    return jsonify(card.serialize()), 200
+
+
+#Decodifica el codigo para obtener el ID
+def getid(token):
+    decoded_token = decode_token(token)
+    user_email = decoded_token["sub"]
+    print(user_email)
+    user = User.query.filter_by(email=user_email).first()
+    user_id = user.id
+    return user_id
+
+#Crea una nueva tarjeta OK
+@api.route('/cards', methods=['POST'])
+def create_new_card():    
+    
+    print(request.get_json()["card_provider"])
+    token=request.json.get("token", None)
+    user_id=getid(token)
+    card_body=request.get_json()
+    new_card=Cards(card_provider=card_body["card_provider"],last_four=card_body["last_four"], bank_name=card_body["bank_name"], card_user_id=user_id)
+    db.session.add(new_card)
+    db.session.commit()
+    
+    response_body = {
+        "message": "Se crea una nueva tarjeta"
+    }
+
+    
+    return jsonify(response_body)
+
+#Borra una tarjeta OK
+@api.route('/cards/<int:card_id>', methods=['DELETE'])
+def delete_card(card_id):
+    card=Cards.query.filter_by(id=card_id).first()    
+    db.session.delete(card)
+    db.session.commit()  
+    
+    response_body = {
+        "message": "Se BORRA una tarjeta"
+    }
+
+    
+    return jsonify(response_body)
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 if __name__ == "__main__":
     api.run()

@@ -1,6 +1,8 @@
 import React, { useState, useEffect, useContext } from "react";
 import { Link, Navigate, useNavigate } from "react-router-dom";
 
+
+
 import { Context } from "../store/appContext";
 
 export const Demo = () => {
@@ -14,6 +16,7 @@ export const Demo = () => {
 
 	return (
 		(store.auth === true ?  
+			
 		<div className="container">
 			<ul className="list-group">
 				{store.demo.map((item, index) => {
@@ -42,6 +45,9 @@ export const Demo = () => {
 			<br />
 			<Link to="/">
 				<button className="btn btn-primary">Back home</button>
+			</Link>
+			<Link to="/card_registration">
+				<button className="btn btn-primary">Register New Card</button>
 			</Link>
 			<button 
 				className="btn btn-danger float-end" 

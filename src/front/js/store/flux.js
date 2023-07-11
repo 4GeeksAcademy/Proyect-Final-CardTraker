@@ -104,6 +104,34 @@ const getState = ({ getStore, getActions, setStore }) => {
 					.then(result => console.log(result))
 					.catch(error => console.log('error', error));
 			},
+//Agregar tarjeta a db desde componente de form
+			addCard:(card_provider,last_four,bank_name)=>{
+				let token = localStorage.getItem("token")
+				const requestOptions = {
+					method: 'POST',
+					headers: {'Content-Type': 'application/json'},
+					body: JSON.stringify(
+						{
+							"card_provider":card_provider,
+							"last_four":last_four,
+							"bank_name":bank_name,
+							"token":token
+						})
+					};
+				  
+				  
+				  fetch(process.env.BACKEND_URL+"/api/cards/", requestOptions)
+					.then(response => response.text())
+					.then(result => console.log(result))
+					.catch(error => console.log('error', error));
+
+			},			
+
+			getUserID: () =>{
+				let token = localStorage.getItem("token") // tengo el token codificado del usuario logeado.
+				console.log(token)
+				// getid(token)
+			},
 			
 			sendEmail: (email) => {
 				const requestOptions = {
@@ -186,8 +214,8 @@ const getState = ({ getStore, getActions, setStore }) => {
 						if (error.data.flash_message) {
 						setStore({ flashMessagePassword: error.data.flash_message });
 						}
-					}})
-			},
+					}})},
+			
 
 			getMessage: async () => {
 				try{
