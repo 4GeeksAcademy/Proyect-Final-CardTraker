@@ -20,6 +20,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 			flashMessageRegister: null,
 			flashMessagePassword: null,
 			valid_token: true,
+			exchangeRate: null
 		},
 		actions: {
 			login: (email,password) => {
@@ -127,10 +128,22 @@ const getState = ({ getStore, getActions, setStore }) => {
 
 			},			
 
-			getUserID: () =>{
-				let token = localStorage.getItem("token") // tengo el token codificado del usuario logeado.
-				console.log(token)
-				// getid(token)
+			getExchangeRates: (currency) =>{
+				
+				const requestOptions = {
+					method: 'GET',
+					redirect: 'follow'
+				  };
+				  
+				  fetch("https://api.currencyapi.com/v3/latest?apikey=mgPFhnXC4ztxst8SFadpBdo6fGVwVz9NXERbJ7LZ&currencies="+currency+"&base_currency=COP", requestOptions)
+					.then(response => response.json())
+					.then(result => {
+						console.log(result)
+						const value = result["data"][currency]["value"]
+						console.log(value);
+						setStore({exchangeRate:value})
+					})
+					.catch(error => console.log('error', error));
 			},
 			
 			sendEmail: (email) => {
