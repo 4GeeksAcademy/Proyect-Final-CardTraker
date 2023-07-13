@@ -33,5 +33,5 @@ class Stablishments(db.Model):
         return {
             "id": self.id,
             "stablishments": self.stablishments_name,
-            
+            "links": self.stablishments_links   
         }         

@@ -2,6 +2,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 	return {
 		store: {
 			message: null,
+			adminStablishments: [],
 			demo: [
 				{
 					title: "FIRST",
@@ -49,7 +50,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 			},
 
 			logout:() => {
-				setStore({auth: false}) 
+				setStore({auth: false})
 				localStorage.removeItem("token")
 			},
 
@@ -96,7 +97,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 				const requestOptions = {
 					method: 'DELETE'
 				  };
-				  
+
 				  fetch(process.env.BACKEND_URL + "/api/user/" + id, requestOptions)
 					.then(response => response.json())
 					.then(result => console.log(result))
@@ -128,7 +129,36 @@ const getState = ({ getStore, getActions, setStore }) => {
 
 				//reset the global store
 				setStore({ demo: demo });
+			}, 
+
+			adminStablishments: (stablishments_name,stablishments_links) => {
+				const requestOptions = {
+					method: 'POST',
+					headers: { 'Content-Type':'application/json'},
+					body: JSON.stringify(
+						{
+							"name": stablishments_name,
+							"link": stablishments_links,  
+						}
+					)
+				};
+				fetch(process.env.BACKEND_URL+ "/api/stablishments", requestOptions)
+					.then(response => response.json())
+					.then(result => console.log(result))
+					.catch(error => console.log('error', error));
+            },
+
+			getStablishments: () => {
+				const requestOptions = {
+					method: 'GET',
+				};
+				  
+				fetch(process.env.BACKEND_URL+ "/api/stablishments", requestOptions)
+					.then(response => response.json())
+					.then(adminStablishments => (result))
+					.catch(error => console.log('error', error));
 			}
+			
 		}
 	};
 };

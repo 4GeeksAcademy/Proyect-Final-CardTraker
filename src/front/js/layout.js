@@ -10,7 +10,7 @@ import { Login } from "./pages/login";
 import { Register } from "./pages/register";
 import { Recover } from "./pages/password_form";
 import injectContext from "./store/appContext";
-import { NavbarAdmin } from "./component/navbarAdmin";
+import { Admin } from "./pages/adminStablishments";
  
 import { Navbar } from "./component/navbar";
 import { Footer } from "./component/footer";
@@ -29,7 +29,7 @@ const Layout = () => {
                 <ScrollToTop>
                     <Navbar />
                     <Routes>
-                        <Route element={<NavbarAdmin />} path="/Admin" />
+                        <Route element={<Admin />} path="/Admin" />
                         <Route element={<Home />} path="/" />
                         <Route element={<Demo />} path="/demo" />
                         <Route element={<Login />} path="/login" />
