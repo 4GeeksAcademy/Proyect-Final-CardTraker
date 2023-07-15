@@ -167,9 +167,6 @@ const getState = ({ getStore, getActions, setStore }) => {
 				};
 				let store = getStore() 
 				try {
-					// setStore({stablishments:["Diego"]}) 
-					// console.log(store.stablishments)
-
 				  const response = await fetch(process.env.BACKEND_URL + "/api/stablishments", requestOptions);
 				  const result = await response.json();
 				  console.log(result);
