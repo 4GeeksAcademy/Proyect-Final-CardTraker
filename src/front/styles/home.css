@@ -1,7 +1,35 @@
-/*
-    home.css: This website contains selectors only used in home.css
+.header {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    height: calc(100vh - 10px); /* Resta la altura del Navbar */
+    background-color: #f0f0f0;
+  }
+  
+  .header-text {
+    font-size: 36px;
+    font-style: italic;
+    margin-bottom: 20px;
+  }
 
-    All pages share the styles on index.css but you should create 
-    one more css for each page that will contain the selected used 
-    on that page only (the ones not reused in other pages).
-*/
+  .card-container {
+    display: flex;
+    justify-content: space-evenly;
+  }
+  
+  .card {
+    width: 45%;
+    padding: 20px;
+    background-color: #f0f0f0;
+    text-align: center;
+  }
+  
+  .card-title {
+    font-size: 18px;
+    margin-bottom: 10px;
+  }
+  
+  .card-description {
+    font-size: 14px;
+  }
