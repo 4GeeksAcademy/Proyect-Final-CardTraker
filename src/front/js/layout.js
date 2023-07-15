@@ -11,6 +11,7 @@ import { Register } from "./pages/register";
 import { Recover } from "./pages/password_form";
 import injectContext from "./store/appContext";
 import { Admin } from "./pages/adminStablishments";
+import { Posts } from "./pages/postedStablishments";
  
 import { Navbar } from "./component/navbar";
 import { Footer } from "./component/footer";
@@ -30,6 +31,7 @@ const Layout = () => {
                     <Navbar />
                     <Routes>
                         <Route element={<Admin />} path="/Admin" />
+                        <Route element={<Posts/>} path="/Posts" />
                         <Route element={<Home />} path="/" />
                         <Route element={<Demo />} path="/demo" />
                         <Route element={<Login />} path="/login" />

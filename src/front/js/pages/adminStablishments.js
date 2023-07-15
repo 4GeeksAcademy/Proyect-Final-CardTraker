@@ -33,18 +33,11 @@ export const Admin = () => {
 </ul>
 <div class="tab-content" id="myTabContent">
   <div class="tab-pane fade show active" id="home-tab-pane" role="tabpanel" aria-labelledby="home-tab" tabindex="0">
-  {store.adminStablishments == ""
+  {store.stablishments == ""
 				?
 				<li className="text-white text-center">No Stablishments</li>
 				:
-					store.adminStablishments.map((id) => {
-						return(
-							adminStablishments() 
-							?
-								<li key={id} className="d-flex justify-content-between align-items-center bookmark-remove-none"><Link to={"/stablishments/"+(id+1)}>{stablishments_name} </Link><i className="far fa-trash-alt text-danger d-inline mx-2" role="button" onClick={()=> actions.adminStablishments(id)}></i></li>
-							:
-								<li key={id} className="d-flex justify-content-between align-items-center bookmark-remove-none"><Link to={"/stablishments/"+(id+1)}>{stablishments_name} </Link><i className="far fa-trash-alt text-danger d-inline mx-2" role="button" onClick={()=> actions.adminStablishments(id)}></i></li>
-					)})
+        store.stablishments.map((item,id) => <li>{item.stablishments}</li>)
 				}
   </div>
   <div class="tab-pane fade" id="profile-tab-pane" role="tabpanel" aria-labelledby="profile-tab" tabindex="0">

@@ -3,6 +3,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 		store: {
 			message: null,
 			adminStablishments: [],
+			stablishments: [],
 			demo: [
 				{
 					title: "FIRST",
@@ -144,20 +145,51 @@ const getState = ({ getStore, getActions, setStore }) => {
 				};
 				fetch(process.env.BACKEND_URL+ "/api/stablishments", requestOptions)
 					.then(response => response.json())
-					.then(result => console.log(result))
+					.then(data => console.log(data))
 					.catch(error => console.log('error', error));
             },
 
-			getStablishments: () => {
-				const requestOptions = {
-					method: 'GET',
-				};
+			// getStablishments: async () => {
+			// 	const requestOptions = {
+			// 		method: 'GET',
+			// 	};
 				  
-				fetch(process.env.BACKEND_URL+ "/api/stablishments", requestOptions)
-					.then(response => response.json())
-					.then(adminStablishments => (result))
-					.catch(error => console.log('error', error));
-			}
+			// 	await fetch(process.env.BACKEND_URL+ "/api/stablishments", requestOptions)
+			// 		.then(response => response.json())
+			// 		.then(result=> console.log(result))
+			// 		// .then(result => setStore({adminStablishments:result}))
+			// 		.catch(error => console.log('error', error));		
+			// }, 
+
+			getStablishments: async () => {
+				const requestOptions = {
+				  method: 'GET',
+				};
+				let store = getStore() 
+				try {
+					// setStore({stablishments:["Diego"]}) 
+					// console.log(store.stablishments)
+
+				  const response = await fetch(process.env.BACKEND_URL + "/api/stablishments", requestOptions);
+				  const result = await response.json();
+				  console.log(result);
+				  await setStore({stablishments:result});
+				  console.log(store.stablishments)
+				} catch (error) {
+				  console.log('error', error);
+				}
+			},
+
+			// deleteStablishments: (id) => {
+			// 	const requestOptions = {
+			// 		method: 'DELETE'
+			// 	  };
+
+			// 	  fetch(process.env.BACKEND_URL + "/api/stablishments/" + id, requestOptions)
+			// 		.then(response => response.json())
+			// 		.then(result => console.log(result))
+			// 		.catch(error => console.log('error', error));
+			// }
 			
 		}
 	};
