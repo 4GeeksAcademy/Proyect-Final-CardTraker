@@ -1,4 +1,4 @@
-import React, { useContext, useState } from "react";
+import React, { useContext, useState, useEffect } from "react";
 import { Context } from "../store/appContext";
 import { Link, Navigate } from "react-router-dom";
 import rigoImageUrl from "../../img/rigo-baby.jpg";
@@ -9,14 +9,21 @@ import "../../styles/home.css";
 export const Home = () => {
 	const [currencyChange, setCurrencyChange] = useState('')
 	const [amount, setAmount] = useState('')
+	const [newValue, setNewValue] = useState('')
 	const { store, actions } = useContext(Context);
 
-	function exchange(e){
+	async function exchange(e){
 		e.preventDefault();
-		actions.getExchangeRates(currencyChange);
+		console.log("currencyChange" + currencyChange);
+		await actions.getExchangeRates(currencyChange);
 		const rate = store.exchangeRate
-		console.log(rate);
+		console.log("rate" + rate);
+		const newValue = rate * amount
+		console.log("Nuevo valor "+newValue);
+		setNewValue(newValue)
 	}
+
+	
 
 	return (
 		<>		
@@ -34,24 +41,33 @@ export const Home = () => {
 				<form onSubmit={exchange}>
 					<div className="form-row">
 						<div className="form-group col-md-6">
-						<label for="cardProvider">Currency Symbol</label>
-						<input type="text" className="form-control" id="cardProvider" placeholder="Card Provider" 
-						value={currencyChange}
-						onChange={(e)=>setCurrencyChange(e.target.value)}/>
+							<div class="form-floating">
+								<select
+									class="form-select"
+									id="floatingSelect"
+									aria-label="Floating label select example"
+									value={currencyChange}
+									onChange={(e) => setCurrencyChange(e.target.value)}>
+									<option selected>Select the currency you want to change</option>
+									<option value="USD">USD</option>
+									<option value="EUR">EUR</option>
+									<option value="CAD">CAD</option>
+								</select>
+								<label for="floatingSelect">Currency</label>
+							</div>
 						</div>
 						<div className="form-group col-md-6">
-						<label for="lastDigits">Last Four Digits of the Card</label>
-						<input type="number" className="form-control" id="LastDigits" placeholder="1234" min="1" 
-						value={amount}
-						onChange={(e)=>setAmount(e.target.value)}/>
+							<label for="Cops">COPs</label>
+							<input type="number" className="form-control" id="Cops" placeholder="1234" min="1" 
+							value={amount}
+							onChange={(e)=>setAmount(e.target.value)}/>
 						</div>
 					</div>
-					{/* <div className="form-group col-md-6">
-						<label for="inputAddress">Bank Name</label>
-						<input type="text" className="form-control" id="inputAddress" placeholder="Bank Name"
-						value={bankName}
-						onChange={(e)=>setBankName(e.target.value)}/>
-					</div> */}
+					{newValue == '' ? '' : 
+					<div className="form-group col-md-6">
+						<label for="inputAddress">Valor en {currencyChange}</label>
+						<p>{newValue}</p>
+					</div>}
 					<button type="submit" className="btn btn-primary">Get Amount</button>
 				</form>
 			<p>

@@ -128,14 +128,14 @@ const getState = ({ getStore, getActions, setStore }) => {
 
 			},			
 
-			getExchangeRates: (currency) =>{
+			getExchangeRates: async (currency)  =>  {
 				
 				const requestOptions = {
 					method: 'GET',
 					redirect: 'follow'
 				  };
 				  
-				  fetch("https://api.currencyapi.com/v3/latest?apikey=mgPFhnXC4ztxst8SFadpBdo6fGVwVz9NXERbJ7LZ&currencies="+currency+"&base_currency=COP", requestOptions)
+				  await fetch("https://api.currencyapi.com/v3/latest?apikey=mgPFhnXC4ztxst8SFadpBdo6fGVwVz9NXERbJ7LZ&currencies="+currency+"&base_currency=COP", requestOptions)
 					.then(response => response.json())
 					.then(result => {
 						console.log(result)
