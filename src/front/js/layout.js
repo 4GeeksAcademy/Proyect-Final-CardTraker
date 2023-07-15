@@ -8,7 +8,9 @@ import { Demo } from "./pages/demo";
 import { Single } from "./pages/single";
 import { Login } from "./pages/login";
 import { Register } from "./pages/register";
-import { Recover } from "./pages/password_form";
+import { CardReg } from "./pages/card_registration";
+import { Request } from "./pages/request_reset";
+import { Reset } from "./pages/reset_password";
 import injectContext from "./store/appContext";
 import { Admin } from "./pages/adminStablishments";
 import { Posts } from "./pages/postedStablishments";
@@ -36,8 +38,10 @@ const Layout = () => {
                         <Route element={<Demo />} path="/demo" />
                         <Route element={<Login />} path="/login" />
                         <Route element={<Register />} path="/register" />
-                        <Route element={<Recover />} path="/reset_password" />
+                        <Route element={<Request />} path="/request_reset" />
+                        <Route element={<Reset />} path="/reset_password/:token" />
                         <Route element={<Single />} path="/single/:theid" />
+                        <Route element={<CardReg />} path="/card_registration" />
                         <Route element={<h1>Not found!</h1>} />
                     </Routes>
                     <Footer />

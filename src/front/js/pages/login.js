@@ -1,4 +1,4 @@
-import React, { useContext, useState, useEffect } from "react";
+import React, { useContext, useState } from "react";
 import { Link, Navigate } from "react-router-dom";
 import { Context } from "../store/appContext";
 import "../../styles/login.css";
@@ -34,15 +34,12 @@ export const Login = () => {
 								value={email} 
 								onChange={(e)=>setEmail(e.target.value.toLowerCase())}
 								className={`input100 ${email.trim() !== '' ? 'has-val' : ''}`} 
-								type="text" 
+								type="email" 
 								name="email"
 							/>
 							<span className="focus-input100" data-placeholder="Email"></span>
 						</div>
 						<div className="wrap-input100 validate-input" data-validate="Enter password">
-							<span className="btn-show-pass">
-								<i className="zmdi zmdi-eye"></i>
-							</span>
 							<input 
 								value={password} 
 								onChange={(e)=>setPassword(e.target.value)} 
@@ -64,20 +61,16 @@ export const Login = () => {
 							<span className="txt1">
 								Don’t have an account? 
 							</span>
-							<Link to="/register">
-								<a className="txt2 ms-2">
+							<Link to="/register" className="txt2 ms-2" onClick={store.flashMessage=null}>
 									<strong>Sign Up</strong>
-								</a>
 							</Link>
 						</div>
 						<div className="text-center">
 							<span className="txt1">
 								Forgot your password? 
 							</span>
-							<Link to="/reset_password">
-								<a className="txt2 ms-2">
+							<Link to="/request_reset" className="txt2 ms-2" onClick={store.flashMessage=null}>
 									<strong>Recover Password</strong>
-								</a>
 							</Link>
 						</div>
 					</form>

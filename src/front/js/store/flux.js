@@ -19,7 +19,9 @@ const getState = ({ getStore, getActions, setStore }) => {
 			auth: false,
 			admin: false,
 			flashMessage: null,
-			flashMessageRegister: null
+			flashMessageRegister: null,
+			flashMessagePassword: null,
+			valid_token: true,
 		},
 		actions: {
 			login: (email,password) => {
@@ -94,7 +96,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 					}})
 				},
 
-			delete_contact: (id) => {
+			delete_user: (id) => {
 				const requestOptions = {
 					method: 'DELETE'
 				  };
@@ -104,6 +106,118 @@ const getState = ({ getStore, getActions, setStore }) => {
 					.then(result => console.log(result))
 					.catch(error => console.log('error', error));
 			},
+//Agregar tarjeta a db desde componente de form
+			addCard:(card_provider,last_four,bank_name)=>{
+				let token = localStorage.getItem("token")
+				const requestOptions = {
+					method: 'POST',
+					headers: {'Content-Type': 'application/json'},
+					body: JSON.stringify(
+						{
+							"card_provider":card_provider,
+							"last_four":last_four,
+							"bank_name":bank_name,
+							"token":token
+						})
+					};
+				  
+				  
+				  fetch(process.env.BACKEND_URL+"/api/cards/", requestOptions)
+					.then(response => response.text())
+					.then(result => console.log(result))
+					.catch(error => console.log('error', error));
+
+			},			
+
+			getUserID: () =>{
+				let token = localStorage.getItem("token") // tengo el token codificado del usuario logeado.
+				console.log(token)
+				// getid(token)
+			},
+			
+			sendEmail: (email) => {
+				const requestOptions = {
+					method:'POST',
+					headers: { 'Content-Type':'application/json'},
+					body: JSON.stringify(
+						{
+							"email": email,
+						}
+					)
+				};
+				fetch(process.env.BACKEND_URL+"/api/request_reset", requestOptions)
+				.then(response => {
+					return response.json().then(data => {
+					if (response.ok) {
+						return { status: response.status, data: data };
+					} else {
+						throw { status: response.status, data: data };
+					}
+					});
+				})
+				  .then(({ status, data }) => {
+					if (data.flash_message) {
+					setStore({ flashMessage: data.flash_message });
+					}
+					if (status === 200) {
+						setStore({ flashMessage: data.flash_message });
+					  }
+				  })
+				.catch(error => {
+				console.error('Error:', error);
+				if (error.status === 401) {
+					if (error.data.flash_message) {
+					setStore({ flashMessage: error.data.flash_message });
+					}
+				}})
+			},
+
+			validateToken: async (token) => {
+				try {
+					const response = await fetch(process.env.BACKEND_URL +`/api/validate_token/${token}`);
+					const data = await response.json();
+					setStore({ valid_token: data.valid_token })
+				} catch (error) {
+					console.log("Error loading message from backend", error)
+				}
+			},
+			
+			resetPassword: (password, token) => {
+				const requestOptions = {
+					method: 'POST',
+					headers: { 'Content-Type':'application/json'},
+					body: JSON.stringify(
+						{
+							"password": password
+						}
+					)
+				};
+				fetch(process.env.BACKEND_URL+"api/request_reset/"+token, requestOptions)
+					.then(response => {
+						return response.json().then(data => {
+						if (response.ok) {
+							return { status: response.status, data: data };
+						} else {
+							throw { status: response.status, data: data };
+						}
+						});
+					})
+				  	.then(({ status, data }) => {
+						if (data.flash_message) {
+						setStore({ flashMessagePassword: data.flash_message });
+						}
+						if (status === 200) {
+							setStore({ flashMessagePassword: data.flash_message });
+						  }
+				  	})
+					.catch(error => {
+					console.error('Error:', error);
+					if (error.status === 401) {
+						if (error.data.flash_message) {
+						setStore({ flashMessagePassword: error.data.flash_message });
+						}
+					}})},
+			
 
 			getMessage: async () => {
 				try{
@@ -117,6 +231,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 					console.log("Error loading message from backend", error)
 				}
 			},
+
 			changeColor: (index, color) => {
 				//get the store
 				const store = getStore();
