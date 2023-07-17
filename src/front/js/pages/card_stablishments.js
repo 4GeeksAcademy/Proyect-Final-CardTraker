@@ -22,7 +22,7 @@ export const CardStbReg = () => {
           setStablishment(event.target.value);
         };
         
-        return (
+        return (store.auth === true ? 
           <>
             <div className="row">
             <select value={card} onChange={handleCardChange}>
@@ -48,8 +48,8 @@ export const CardStbReg = () => {
               }       
             </select>
             <p>Selected value: {stablishment}</p>
-          </>
-        );
+          </>          
+        : alert("Usted no tiene acceso a esta vista."));        
       };
 
 
