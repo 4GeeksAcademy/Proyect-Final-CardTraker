@@ -1,6 +1,6 @@
 from ssl import ALERT_DESCRIPTION_ACCESS_DENIED
 from flask import Flask, request, jsonify, url_for, Blueprint, flash, redirect
-from api.models import db, User, Cards, UserStablishments
+from api.models import db, User, Cards, UserStablishments, Stablishments
 from api.utils import generate_sitemap, APIException
 from flask_jwt_extended import create_access_token, get_jwt_identity, jwt_required, decode_token
 from flask_login import login_required, current_user
@@ -229,7 +229,7 @@ def get_cards_stab():
 
     return jsonify(result), 200
 
-# Genera una nueva relación entre tarjetas y establecimientosn OK
+# Genera una nueva relación entre tarjetas y establecimientos OK 
 @api.route('/card_stab', methods=['POST'])
 def create_new_stb_card():    
     
@@ -261,7 +261,13 @@ def delete_stb_card(cardstb_id):
     
     return jsonify(response_body)
 
-
+#Llama los establecimientos
+@api.route('/stablishments', methods=['GET'])
+def get_all_stablishments():
+    all_stablishments = Stablishments.query.all()
+    print(all_stablishments)
+    result = list(map(lambda item: item.serialize(), all_stablishments))
+    return jsonify(result), 200
 
 
 

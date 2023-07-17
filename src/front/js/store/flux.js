@@ -20,6 +20,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 			flashMessageRegister: null,
 			flashMessagePassword: null,
 			valid_token: true,
+			stablishments: [],
 		},
 		actions: {
 			login: (email,password) => {
@@ -104,7 +105,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 					.then(result => console.log(result))
 					.catch(error => console.log('error', error));
 			},
-//Agregar tarjeta a db desde componente de form
+//Agregar tarjeta a db desde componente de form OK
 			addCard:(card_provider,last_four,bank_name)=>{
 				let token = localStorage.getItem("token")
 				const requestOptions = {
@@ -126,13 +127,67 @@ const getState = ({ getStore, getActions, setStore }) => {
 					.catch(error => console.log('error', error));
 
 			},			
+// Agregar relación entre tarjeta y establecimiento 
+			addCardStb:(card_id,stb_id)=>{
+				const requestOptions = {
+					method: 'POST',
+					headers: {'Content-Type': 'application/json'},
+					body: JSON.stringify(
+						{
+							"card_id":card_id,
+							"last_four":stb_id,							
+						})
+					};
+				  
+				  
+				  fetch(process.env.BACKEND_URL+"/api/card_stab", requestOptions)
+					.then(response => response.text())
+					.then(result => console.log(result))
+					.catch(error => console.log('error', error));
+
+			},
+
 
 			getUserID: () =>{
 				let token = localStorage.getItem("token") // tengo el token codificado del usuario logeado.
 				console.log(token)
 				// getid(token)
 			},
-			
+// Traer Establecimientos Admin
+			getStablishments: async () => {
+				const requestOptions = {
+				method: 'GET',
+				};
+				let store = getStore() 
+				try {
+				const response = await fetch(process.env.BACKEND_URL + "/api/stablishments", requestOptions);
+				const result = await response.json();
+				console.log(result);
+				await setStore({stablishments:result});
+				console.log(store.stablishments)
+				} catch (error) {
+				console.log('error', error);
+				}
+			},
+// Traer Establecimientos como usuario 
+			getUserStablishments: async () => {
+				let token = localStorage.getItem("token")
+				const requestOptions = {
+				method: 'GET',
+				};
+				let store = getStore() 
+				try {
+				const response = await fetch(process.env.BACKEND_URL + "/api/stablishments", requestOptions);
+				const result = await response.json();
+				console.log(result);
+				await setStore({stablishments:result});
+				console.log(store.stablishments)
+				} catch (error) {
+				console.log('error', error);
+				}
+			},
+
+
 			sendEmail: (email) => {
 				const requestOptions = {
 					method:'POST',
