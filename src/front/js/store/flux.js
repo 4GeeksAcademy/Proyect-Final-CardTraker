@@ -34,7 +34,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 						}
 					)
 				};
-				fetch(process.env.BACKEND_URL+ "/api/login", requestOptions)
+				fetch(process.env.BACKEND_URL+ "api/login", requestOptions)
 					.then(response => {
 						if( response.status === 200 ){
 								setStore({auth: true}) // Modifico el valor de la variable auth.
