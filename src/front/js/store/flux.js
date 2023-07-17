@@ -21,6 +21,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 			flashMessagePassword: null,
 			valid_token: true,
 			stablishments: [],
+			cards:[],
 		},
 		actions: {
 			login: (email,password) => {
@@ -169,9 +170,8 @@ const getState = ({ getStore, getActions, setStore }) => {
 				console.log('error', error);
 				}
 			},
-// Traer Establecimientos como usuario 
-			getUserStablishments: async () => {
-				let token = localStorage.getItem("token")
+// Traer Establecimientos como usuario Ok
+			getUserStablishments: async () => {				
 				const requestOptions = {
 				method: 'GET',
 				};
@@ -186,6 +186,22 @@ const getState = ({ getStore, getActions, setStore }) => {
 				console.log('error', error);
 				}
 			},
+// Traer tarjetas como usuario 
+			getUserCards: async () => {				
+				const requestOptions = {
+				method: 'GET',
+				};
+				let store = getStore() 
+				try {
+				const response = await fetch(process.env.BACKEND_URL + "/api/cards", requestOptions);
+				const result = await response.json();
+				await setStore({cards:result});
+				console.log(store.cards)
+				} catch (error) {
+				console.log('error', error);
+				}
+			},
+
 
 
 			sendEmail: (email) => {
@@ -281,7 +297,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 					// don't forget to return something, that is how the async resolves
 					return data;
 				}catch(error){
-					console.log("Error loading message from backend", error)
+					// console.log("Error loading message from backend", error)
 				}
 			},
 

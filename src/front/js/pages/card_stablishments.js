@@ -8,12 +8,10 @@ export const CardStbReg = () => {
         
         useEffect(() => {
           actions.getUserStablishments();
-          console.log("prueba")
-          console.log(store.adminStablishments)
-          console.log("prueba1")
+          actions.getUserCards();          
         }, []);
 
-        
+
         const [card, setCard] = useState('');
         const [stablishment, setStablishment] = useState('');
       
@@ -23,15 +21,19 @@ export const CardStbReg = () => {
         const handleStablishmentChange = (event) => {
           setStablishment(event.target.value);
         };
-      
+        
         return (
           <>
             <div className="row">
             <select value={card} onChange={handleCardChange}>
-              <option value="">Select a Card</option>              
-              <option value="option1">Option 1</option>
-              <option value="option2">Option 2</option>
-              <option value="option3">Option 3</option>
+              <option value="">Select a Card</option> 
+              {store.cards == ""
+              ?
+                <option className="text-white text-center">No Cards</option>
+              :
+                store.cards.map((item,id) => <option>{item.bank_name + " " +item.card_provider+ " " +item.last_four}</option>)
+              }               
+              
             </select>
             </div>
             <p>Selected value: {card}</p>
