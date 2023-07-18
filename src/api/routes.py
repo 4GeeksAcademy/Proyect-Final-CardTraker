@@ -1,4 +1,3 @@
-from ssl import ALERT_DESCRIPTION_ACCESS_DENIED
 from flask import Flask, request, jsonify, url_for, Blueprint, flash, redirect
 from api.models import db, User, Cards
 from api.utils import generate_sitemap, APIException
