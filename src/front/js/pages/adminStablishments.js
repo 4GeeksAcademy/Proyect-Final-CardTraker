@@ -7,6 +7,8 @@ export const Admin = () => {
   const [stablishments_name, setstablishments_name] = useState('');
 	const [stablishments_links, setstablishments_links] = useState('');
 
+  const click = () => {window.location.reload();};
+
 	const {actions, store} = useContext(Context);
   console.log(stablishments_name, stablishments_links)  
   console.log()
@@ -17,7 +19,7 @@ export const Admin = () => {
     actions.getUser()
     actions.deleteStablishments(id)
 	}
-
+    
   useEffect(() => {
 		actions.getStablishments();
     actions.getUser();
@@ -51,18 +53,22 @@ export const Admin = () => {
                       </thead>
                       <tbody>
                         <tr>
-                          <td>  {store.stablishments == ""
+                          <td>  
+                            {store.stablishments == ""
                                         ?
                                         <li className="text-white text-center">No Stablishments</li>
                                         :
                                         store.stablishments.map((item) => <li className="text-white text-center"  id="bg-tables">{item.stablishments}</li>)
-                                        }</td>
-                          <td>  {store.stablishments == ""
+                                        }
+                           </td>
+                          <td>  
+                            {store.stablishments == ""
                                         ?
                                         <li className="text-white text-center">No Stablishments</li>
                                         :
                                         store.stablishments.map((item,id) => <li className="text-white text-center" id="bg-tables">{item.links}</li>)
-                                        }</td>
+                                        }
+                          </td>
                         </tr>
                       </tbody>
                   </table>
@@ -81,24 +87,26 @@ export const Admin = () => {
                         </thead>
                         <tbody>
                           <tr>
-                            <td>  {store.user == ""
+                           <td>  {store.user == ""
                                 ?
                         <li className="text-white text-center">No Users</li>
                                 :
                         store.user.map((item) => <li className="text-white text-center" id="bg-tables">{item.user_name}</li>)
-                                }</td>
+                                }
+                            </td>
                             <td>  {store.user == ""
                                 ?
                         <li className="text-white text-center">No Users</li>
                                 :
                         store.user.map((item,id) => <li className="text-white text-center" id="bg-tables">{item.email}</li>)
-                                }</td>    
+                                }
+                            </td>    
                           </tr>
                         </tbody>
                 </table>
               </div>  
             </div>
-           </div>  
+         </div>  
         <div class="tab-pane fade" id="profile-tab-pane" role="tabpanel" aria-labelledby="profile-tab" tabindex="0">
           <div class="bg-dark" id="bg-body">
             <form onSubmit={sendData} id="creatorform">
@@ -109,16 +117,16 @@ export const Admin = () => {
               id="exampleInputName1" 
               aria-describedby="emailHelp"
               value={stablishments_name} 
-                      onChange={(e)=>setstablishments_name(e.target.value.toLowerCase())}/>
+                      onChange={(e)=>setstablishments_name(e.target.value.toString())}/>
               <div id="emailHelp" class="form-text text-white">Stablishments for User's overview</div>
             </div>
             <div class="mb-3 container">
               <label for="exampleInputLink1" class="form-label text-white"><strong>Stablishments links</strong></label>
               <input type="Links" class="form-control" id="exampleInputLink1"
               value={stablishments_links} 
-                      onChange={(e)=>setstablishments_links(e.target.value.toLowerCase())}/>
+                      onChange={(e)=>setstablishments_links(e.target.value.toString())}/>
             </div>
-            <button type="submit" class="btn-danger justify-content-center bd-violet-rgb" id="submit"><strong>Submit</strong></button>
+            <button type="submit" class="btn-danger justify-content-center bd-violet-rgb" id="submit" onClick={click}><strong>Submit</strong></button>
             </form>
           </div>  
         </div>
