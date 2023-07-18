@@ -55,19 +55,19 @@ export const Admin = () => {
                         <tr>
                           <td>  
                             {store.stablishments == ""
-                                        ?
-                                        <li className="text-white text-center">No Stablishments</li>
-                                        :
-                                        store.stablishments.map((item) => <li className="text-white text-center"  id="bg-tables">{item.stablishments}</li>)
-                                        }
+                                ?
+                                <li className="text-white text-center">No Stablishments</li>
+                                :
+                                store.stablishments.map((item) => <li className="text-white text-center"  id="bg-tables">{item.stablishments}</li>)
+                                }
                            </td>
                           <td>  
                             {store.stablishments == ""
-                                        ?
-                                        <li className="text-white text-center">No Stablishments</li>
-                                        :
-                                        store.stablishments.map((item,id) => <li className="text-white text-center" id="bg-tables">{item.links}</li>)
-                                        }
+                                ?
+                                <li className="text-white text-center">No Stablishments</li>
+                                :
+                                store.stablishments.map((item,id) => <li className="text-white text-center" id="bg-tables">{item.links}</li>)
+                                }
                           </td>
                         </tr>
                       </tbody>
@@ -89,16 +89,16 @@ export const Admin = () => {
                           <tr>
                            <td>  {store.user == ""
                                 ?
-                        <li className="text-white text-center">No Users</li>
+                                <li className="text-white text-center">No Users</li>
                                 :
-                        store.user.map((item) => <li className="text-white text-center" id="bg-tables">{item.user_name}</li>)
+                                store.user.map((item) => <li className="text-white text-center" id="bg-tables">{item.user_name}</li>)
                                 }
                             </td>
                             <td>  {store.user == ""
                                 ?
-                        <li className="text-white text-center">No Users</li>
+                                <li className="text-white text-center">No Emails</li>
                                 :
-                        store.user.map((item,id) => <li className="text-white text-center" id="bg-tables">{item.email}</li>)
+                                store.user.map((item,id) => <li className="text-white text-center" id="bg-tables">{item.email}</li>)
                                 }
                             </td>    
                           </tr>
