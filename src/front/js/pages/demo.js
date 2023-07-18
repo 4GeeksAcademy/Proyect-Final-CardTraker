@@ -50,6 +50,9 @@ export const Demo = () => {
 			<Link to="/card_registration">
 				<button className="btn btn-primary">Register New Card</button>
 			</Link>
+			<Link to="/card_stablishments">
+				<button className="btn btn-primary">Associate a Card to Establishment</button>
+			</Link>
 			<button 
 				className="btn btn-danger float-end" 
 				onClick={()=>handle_logout()}>

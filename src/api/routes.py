@@ -1,14 +1,16 @@
 from flask import Flask, request, jsonify, url_for, Blueprint, flash, redirect
 from sqlalchemy import or_
-from api.models import db, User, Cards, Stablishments
+from api.models import db, User, Cards, UserStablishments, Stablishments
 from api.utils import generate_sitemap, APIException
 from flask_jwt_extended import create_access_token, get_jwt_identity, jwt_required, decode_token
 from flask_login import login_required, current_user
 from flask_mail import Message
 import random, string, os
 from extensions import mail
+from flask_cors import CORS, cross_origin
 
 api = Blueprint('api', __name__)
+CORS(api)
 
 # //////////////////////LOGIN & REGISTRO/////////////////////////
 
@@ -24,7 +26,7 @@ def sign_up():
         db.session.commit()
 
         response_body = {
-            "message": "Se creo un nuevo usuario con existo.",
+            "message": "Se creo un nuevo usuario con exito.",
             "flash_message": "Se ha creado usuario con exito"
         }
         return jsonify(response_body), 200
@@ -158,13 +160,18 @@ def protected():
 
 #Llama todas las tarjetas OK
 @api.route('/cards', methods=['GET'])
+@jwt_required()
 def get_cards():
-    all_cards = Cards.query.all()
+    # Access the identity of the current user with get_jwt_identity
+    current_user = get_jwt_identity()    
+    user=User.query.filter_by(email=current_user).first()
+    all_cards = Cards.query.filter_by(card_user_id=user.id).all()
     print(all_cards)
     result = list(map(lambda card: card.serialize() ,all_cards))
-    print(result)    
+    print(result)   
+    return jsonify(result), 200  
 
-    return jsonify(result), 200
+   
 
 #Llama una sola tarjeta OK
 @api.route('/cards/<int:card_id>', methods=['GET'])
@@ -198,7 +205,6 @@ def create_new_card():
     response_body = {
         "message": "Se crea una nueva tarjeta"
     }
-
     
     return jsonify(response_body)
 
@@ -215,6 +221,67 @@ def delete_card(card_id):
 
     
     return jsonify(response_body)
+
+
+#Llama todas las tarjetas y su relación con establecimientos OK
+@api.route('/card_stab', methods=['GET'])
+def get_cards_stab():
+    all_cards_stab = UserStablishments.query.all()
+    print(all_cards_stab)
+    result = list(map(lambda cardstb: cardstb.serialize() ,all_cards_stab))
+    print(result)    
+
+    return jsonify(result), 200
+
+# Genera una nueva relación entre tarjetas y establecimientos OK 
+@api.route('/card_stab', methods=['POST'])
+@cross_origin()
+def create_new_stb_card():    
+    
+    # print(request.get_json()["card_stablishments"])
+    # token=request.json.get("token", None)
+    # user_id=getid(token)
+    card_stb_body=request.get_json()
+    new_card=UserStablishments(card=card_stb_body["card"],stablishment=card_stb_body["stablishment"])
+    db.session.add(new_card)
+    db.session.commit()
+    
+    response_body = {
+        "message": "Se crea una nueva relacion tarjeta-establecimiento"
+    }
+    
+    return jsonify(response_body)
+
+#Borra una relacion tarjeta-establecimiento OK
+@api.route('/card_stab/<int:cardstb_id>', methods=['DELETE'])
+def delete_stb_card(cardstb_id):
+    cardstb=UserStablishments.query.filter_by(id=cardstb_id).first()    
+    db.session.delete(cardstb)
+    db.session.commit()  
+    
+    response_body = {
+        "message": "Se BORRA una relacion"
+    }
+
+    
+    return jsonify(response_body)
+
+#Llama los establecimientos
+@api.route('/stablishments', methods=['GET'])
+def get_all_stablishments():
+    all_stablishments = Stablishments.query.all()
+    print(all_stablishments)
+    result = list(map(lambda item: item.serialize(), all_stablishments))
+    return jsonify(result), 200
+
+
+
+
+
+
+
+
+
 
 
 if __name__ == "__main__":
