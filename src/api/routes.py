@@ -1,4 +1,3 @@
-from ssl import ALERT_DESCRIPTION_ACCESS_DENIED
 from flask import Flask, request, jsonify, url_for, Blueprint, flash, redirect
 from api.models import db, User, Cards
 from api.utils import generate_sitemap, APIException
@@ -43,9 +42,6 @@ def get_users():
     result = list(map(lambda item: item.serialize(), all_users))
     return jsonify(result), 200
 
-
-
-#Autenticacion.
 # Elimina un usuario registrado
 @api.route('/user/<int:user_id>', methods=['DELETE'])
 @login_required
@@ -56,7 +52,7 @@ def delete_user(user_id):
 
     return jsonify({'message': 'The user has been succesfully deleted'}),200
 
-# LOGIN Autenticacion.
+#LOGIN Autenticacion.
 @api.route("/login", methods=["POST"])
 def login():
     email = request.json.get("email", None)

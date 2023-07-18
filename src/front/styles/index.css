@@ -12,6 +12,7 @@ a {
   -webkit-transition: 0.5s;
   -o-transition: 0.5s;
   transition: 0.5s;
+  text-decoration: none;
 }
 
 a:hover, a:active, a:focus {
@@ -23,9 +24,11 @@ a:hover, a:active, a:focus {
 .boton{
   background-color: #DD356E;
   border: #DD356E;
+  text-decoration: none;
 }
 
 .boton:hover{
   background-color: #e35d8b;
   border: #e35d8b;
+  text-decoration: none;
 }
