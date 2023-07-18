@@ -71,7 +71,7 @@ export const CardReg = () => {
 									</button>
 							</div>
 						</div>                    
-                    <Link to="/">
+                    <Link to="/demo">
                         <div className="container-login100-form-btn">
                                 <div className="wrap-login100-form-btn">
                                     <div className="login100-form-bgbtn"></div>

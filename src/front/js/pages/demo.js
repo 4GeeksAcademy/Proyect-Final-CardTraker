@@ -17,47 +17,31 @@ export const Demo = () => {
 	return (
 		(store.auth === true ?  
 			
-		<div className="container">
-			<ul className="list-group">
-				{store.demo.map((item, index) => {
-					return (
-						<li
-							key={index}
-							className="list-group-item d-flex justify-content-between"
-							style={{ background: item.background }}>
-							<Link to={"/single/" + index}>
-								<span>Link to: {item.title}</span>
-							</Link>
-							{// Conditional render example
-							// Check to see if the background is orange, if so, display the message
-							item.background === "orange" ? (
-								<p style={{ color: item.initial }}>
-									Check store/flux.js scroll to the actions to see the code
-								</p>
-							) : null}
-							<button className="btn btn-success" onClick={() => actions.changeColor(index, "orange")}>
-								Change Color
-							</button>
-						</li>
-					);
-				})}
-			</ul>
-			<br />
-			<Link to="/">
-				<button className="btn btn-primary">Back home</button>
-			</Link>
-			<Link to="/card_registration">
-				<button className="btn btn-primary">Register New Card</button>
-			</Link>
-			<Link to="/card_stablishments">
-				<button className="btn btn-primary">Associate a Card to Establishment</button>
-			</Link>
-			<button 
-				className="btn btn-danger float-end" 
-				onClick={()=>handle_logout()}>
-					Logout
-			</button>
-		</div>
+		<>
+			<div className="header">
+                <h1 className="header-text text-center">Enlista tus tarjetas y vinculalas<br/> con un establecimiento para empezar.</h1>
+                <div className="text-center">
+                    <span className="txt1">
+                        Con los siguientes links :)
+                    </span>
+					<br />
+                    <Link to="/card_registration" className="txt2 ms-2">
+                            <strong>Registra una nueva tarjeta</strong>
+                    </Link>
+					<br />
+					<Link to="/card_stablishments" className="txt2 ms-2">
+                            <strong>Asoscia una tarjeta a un establecimiento.</strong>
+                    </Link>
+                </div>
+            </div>
+			<div className="text-center">
+				<button
+					className="btn btn-danger" 
+					onClick={()=>handle_logout()}>
+						Logout
+				</button>
+			</div>
+		</>
 		: alert("Usted no tiene acceso a esta vista."))
 	);
 };
