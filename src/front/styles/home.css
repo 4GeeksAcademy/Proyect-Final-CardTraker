@@ -1,7 +1,52 @@
-/*
-    home.css: This website contains selectors only used in home.css
-
-    All pages share the styles on index.css but you should create 
-    one more css for each page that will contain the selected used 
-    on that page only (the ones not reused in other pages).
-*/
+.header {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  height: calc(100vh - 10px); /* Resta la altura del Navbar */
+  background-color: #F0F0F0;
+}
+.header-text {
+  font-size: 36px;
+  font-style: italic;
+  margin-bottom: 20px;
+}
+.card-container {
+  justify-content: space-evenly;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 15px;
+  background: #F2F2F2;
+}
+.card {
+  width: 100%;
+  margin: 0 2rem;
+  text-align: center;
+  background: #fff;
+  border-radius: 10px;
+  overflow: hidden;
+  padding: 40px 20px 10px 20px;
+  display: flex;
+  box-shadow: 0 5px 10px 0px rgba(0, 0, 0, 0.1);
+  -moz-box-shadow: 0 5px 10px 0px rgba(0, 0, 0, 0.1);
+  -webkit-box-shadow: 0 5px 10px 0px rgba(0, 0, 0, 0.1);
+  -o-box-shadow: 0 5px 10px 0px rgba(0, 0, 0, 0.1);
+  -ms-box-shadow: 0 5px 10px 0px rgba(0, 0, 0, 0.1);
+}
+.card-title {
+  font-size: 18px;
+  margin-bottom: 20px;
+  color: #DD356E
+}
+.card-description {
+  font-size: 14px;
+}
+.card-content {
+  flex: 1; /* Permite que el contenido ocupe todo el espacio disponible */
+}
+.boton{
+background-color: #DD356E;
+color: white;
+}
