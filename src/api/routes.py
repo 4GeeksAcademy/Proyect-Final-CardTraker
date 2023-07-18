@@ -1,6 +1,8 @@
 from flask import Flask, request, jsonify, url_for, Blueprint, flash, redirect
+
 from sqlalchemy import or_
 from api.models import db, User, Cards, UserStablishments, Stablishments
+
 from api.utils import generate_sitemap, APIException
 from flask_jwt_extended import create_access_token, get_jwt_identity, jwt_required, decode_token
 from flask_login import login_required, current_user
@@ -276,14 +278,6 @@ def get_all_stablishments():
 
 
 
-
-
-
-
-
-
-
-
 if __name__ == "__main__":
     api.run()
 
@@ -319,6 +313,10 @@ def delete_stablishments(stablishments_id):
         "message": "Stablishment Deleted"
         }
     return jsonify(response_body), 200
+
+
+
+
 
 
     

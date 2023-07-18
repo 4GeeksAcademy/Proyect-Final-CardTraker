@@ -37,11 +37,13 @@ export const CardReg = () => {
 	return (store.auth === true ? 
         <>
         <div>
+=========
             <button 
                 className="btn btn-danger" 
                 onClick={()=>handle_logout()}>
                     Logout
             </button>
+
             <form>
                 <div className="container position-absolute top-50 start-50 translate-middle" >
                     <div className="form-row mx-auto">
@@ -105,7 +107,12 @@ export const CardReg = () => {
                 Logout
         </button>
     </div>
-                  
+=========
+                           
+        
+            
+        
+
         </>
         : alert("Usted no tiene acceso a esta vista."))
     
