@@ -1,17 +1,5 @@
-.header {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    height: calc(100vh - 10px); /* Resta la altura del Navbar */
-    background-color: #f0f0f0;
-  }
-  
-  .header-text {
-    font-size: 36px;
-    font-style: italic;
-    margin-bottom: 20px;
-  }
+/*
+    home.css: This website contains selectors only used in home.css
 
   .card-container {
     justify-content: space-evenly;

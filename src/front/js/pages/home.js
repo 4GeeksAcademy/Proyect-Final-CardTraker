@@ -1,6 +1,7 @@
-import React, { useContext, useState } from "react";
+import React, { useContext, useState, useEffect } from "react";
 import { Context } from "../store/appContext";
-import { Link } from "react-router-dom";
+import { Link, Navigate } from "react-router-dom";
+import rigoImageUrl from "../../img/rigo-baby.jpg";
 import "../../styles/home.css";
 import cards from "../../img/cards.jpeg"
 import stores from "../../img/tiendas.jpg"
@@ -25,45 +26,25 @@ export const Home = () => {
 		setNewValue(newValue)
 	}
 
+	
+
 	return (
-		<>	
-			<div class="header">
-				<h1 class="header-text text-center">"Aquel que sabe ahorrar y gastar es el más feliz,<br/> porque logra disfrutar de ambas cosas." <br/> -Samuel Johnson-</h1>
-				<div className="text-center">
-					<span className="txt1">
-						No lo dudes mas he inscribite :)
-					</span>
-					<Link to="/register" className="txt2 ms-2">
-							<strong>Sign Up</strong>
-					</Link>
+		<>		
+			<div className="text-center mt-5">
+				<h1>Hello Rigo!!</h1>
+				<p>
+					<img src={rigoImageUrl} />
+				</p>
+				<div className="alert alert-info">
+					{store.message || "Loading message from the backend (make sure your python backend is running)..."}
 				</div>
-			</div>
-
-
-			<div class="card-container my-2">
-				<div class="card">
-					<h2 class="card-title">Ten mas control sobre tus tarjetas de credito</h2>
-					<div className="row">
-						<img src={cards} className="col-6 p-0" />
-						<p className="card-description col-6 align-middle">Lorem ipsum dolor sit amet, consectetur adipiscing elit.Lorem ipsum dolor sit amet, consectetur adipiscing elit.Lorem ipsum dolor sit amet, consectetur adipiscing elit.Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
-					</div>
-				</div>
-				<div class="card">
-					<h2 class="card-title">Mira en que lugares la tienes vinculadas</h2>
-					<div className="row">
-						<img src={stores} className="col-6 p-0" />
-						<p className="card-description col-6 align-middle">Lorem ipsum dolor sit amet, consectetur adipiscing elit.Lorem ipsum dolor sit amet, consectetur adipiscing elit.Lorem ipsum dolor sit amet, consectetur adipiscing elit.Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
-					</div>
-				</div>
-			</div>
-
-			<div class="card-container my-2">
-				<div class="card">
-					<h2 class="card-title">Revisa que tasa te combran por compras internacionales</h2>
-					<form onSubmit={exchange}>
-					<div className="form-row m-2">
-						<div className="form-group">
-							<div class="form-floating m-2">
+				<Link to="/login"><button className="btn btn-primary">Login</button></Link>
+				<Link to="/register"><button className="btn btn-info">Register</button></Link>
+				<button className="btn btn-danger" onClick={actions.getExchangeRates}>Exchange Rates</button>
+				<form onSubmit={exchange}>
+					<div className="form-row">
+						<div className="form-group col-md-6">
+							<div class="form-floating">
 								<select
 									class="form-select py-0 card-description"
 									id="floatingSelect"
@@ -89,17 +70,16 @@ export const Home = () => {
 						<label className="m-2 card-description" for="inputAddress">Valor en {currencyChange}</label>
 						<p className="m-2 card-description">{newValue}</p>
 					</div>}
-					<button type="submit" className="btn boton m-2">Hacer Cambio</button>
-					</form>
-				</div>
-				<div class="card">
-					<h2 class="card-title">Averigua que beneficios tienen tus tarjetas</h2>
-					<div className="row">
-						<img src={benefits} className="col-6 p-0" />
-						<p className="card-description col-6 align-middle">Lorem ipsum dolor sit amet, consectetur adipiscing elit.Lorem ipsum dolor sit amet, consectetur adipiscing elit.Lorem ipsum dolor sit amet, consectetur adipiscing elit.Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
-					</div>
-				</div>
-			</div>
+					<button type="submit" className="btn btn-primary">Get Amount</button>
+				</form>
+			<p>
+				This boilerplate comes with lots of documentation:{" "}
+				<a href="https://start.4geeksacademy.com/starters/react-flask">
+					Read documentation
+				</a>
+			</p>
+		</div>
+
 		</>
 
 	);
