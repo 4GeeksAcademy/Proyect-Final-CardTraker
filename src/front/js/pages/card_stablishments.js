@@ -22,6 +22,12 @@ export const CardStbReg = () => {
         const handleStablishmentChange = (event) => {
           setStablishment(event.target.value);
         };
+        function createCardStb(e){
+          e.preventDefault()
+          console.log('send create relationship')
+          console.log(card, stablishment)
+          actions.addCardStb(card, stablishment)
+        };
        
         
         return (store.auth === true ? 
@@ -50,6 +56,7 @@ export const CardStbReg = () => {
               }       
             </select>
             <p>Selected value: {stablishment}</p>
+            <button type="submit" className="btn btn-primary" onClick={createCardStb}>Link establishment to Card</button>
           </>          
         : alert("Usted no tiene acceso a esta vista."));        
       };

@@ -130,22 +130,22 @@ const getState = ({ getStore, getActions, setStore }) => {
 			},			
 // Agregar relación entre tarjeta y establecimiento 
 			addCardStb:(card_id,stb_id)=>{
-				const requestOptions = {
+				var requestOptions = {
 					method: 'POST',
-					headers: {'Content-Type': 'application/json'},
+					headers: {"Content-Type": "application/json"},
 					body: JSON.stringify(
 						{
-							"card_id":card_id,
-							"last_four":stb_id,							
-						})
-					};
-				  
+							"card": card_id,							
+							"stablishment": stb_id
+						}
+					),
+					redirect: 'follow'
+				  };
 				  
 				  fetch(process.env.BACKEND_URL+"/api/card_stab", requestOptions)
 					.then(response => response.text())
 					.then(result => console.log(result))
 					.catch(error => console.log('error', error));
-
 			},
 
 

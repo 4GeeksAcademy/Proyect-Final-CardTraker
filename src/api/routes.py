@@ -7,8 +7,10 @@ from flask_login import login_required, current_user
 from flask_mail import Message 
 import random, string, os
 from extensions import mail
+from flask_cors import CORS, cross_origin
 
 api = Blueprint('api', __name__)
+CORS(api)
 
 # //////////////////////LOGIN & REGISTRO/////////////////////////
 
@@ -236,6 +238,7 @@ def get_cards_stab():
 
 # Genera una nueva relación entre tarjetas y establecimientos OK 
 @api.route('/card_stab', methods=['POST'])
+@cross_origin()
 def create_new_stb_card():    
     
     # print(request.get_json()["card_stablishments"])
