@@ -11,6 +11,7 @@ import { Register } from "./pages/register";
 import { CardReg } from "./pages/card_registration";
 import { Request } from "./pages/request_reset";
 import { Reset } from "./pages/reset_password";
+import { CardStbReg } from "./pages/card_stablishments";
 import injectContext from "./store/appContext";
 
 import { Navbar } from "./component/navbar";
@@ -25,10 +26,10 @@ const Layout = () => {
     if(!process.env.BACKEND_URL || process.env.BACKEND_URL == "") return <BackendURL/ >;
 
     return (
-        <div>
+        <div>            
             <BrowserRouter basename={basename}>
+            <Navbar/>
                 <ScrollToTop>
-                    <Navbar />
                     <Routes>
                         <Route element={<Home />} path="/" />
                         <Route element={<Demo />} path="/demo" />
@@ -38,10 +39,11 @@ const Layout = () => {
                         <Route element={<Reset />} path="/reset_password/:token" />
                         <Route element={<Single />} path="/single/:theid" />
                         <Route element={<CardReg />} path="/card_registration" />
+                        <Route element={<CardStbReg />} path="/card_stablishments" />
                         <Route element={<h1>Not found!</h1>} />
-                    </Routes>
-                    <Footer />
+                    </Routes>                    
                 </ScrollToTop>
+                <Footer/>
             </BrowserRouter>
         </div>
     );
