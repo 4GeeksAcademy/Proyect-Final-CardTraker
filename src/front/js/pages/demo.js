@@ -1,5 +1,6 @@
 import React, { useState, useEffect, useContext } from "react";
 import { Link, Navigate, useNavigate } from "react-router-dom";
+import "../../styles/admin.css";
 
 
 
@@ -17,7 +18,7 @@ export const Demo = () => {
 	return (
 		(store.auth === true ?  
 			
-		<div className="container">
+		<div className="container" id="body">
 			<ul className="list-group">
 				{store.demo.map((item, index) => {
 					return (

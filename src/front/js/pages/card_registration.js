@@ -2,6 +2,7 @@ import { Link, Navigate, useNavigate } from "react-router-dom";
 import React, { Component, useEffect, useState, useContext } from "react";
 import { Context } from "../store/appContext";
 
+
 export const CardReg = () => {
 
     const [provider, setProvider]=useState("")
@@ -33,6 +34,7 @@ export const CardReg = () => {
 
 	return (store.auth === true ? 
         <>
+        <div>
             <form>
                 <div className="form-row">
                     <div className="form-group col-md-6">
@@ -54,15 +56,9 @@ export const CardReg = () => {
                     value={bankName}
                     onChange={(e)=>setBankName(e.target.value)}/>
                 </div>
-                {/* <div className="form-group col-md-6">
-                    <label for="userID">User ID</label>
-                    <input type="number" className="form-control" id="userID" placeholder="user ID" min="1"
-                    value={userID}
-                    onChange={(e)=>setUserID(e.target.value)}/>
-                </div> */}
                 <button type="submit" className="btn btn-primary" onClick={createCard}>Add Card</button>
                 <button className="btn btn-primary" onClick={getUser}>Get User</button>
-            </form>)
+            </form>
             <Link to="/">
             <button className="btn btn-primary">Back home</button>
         </Link>
@@ -71,6 +67,7 @@ export const CardReg = () => {
             onClick={()=>handle_logout()}>
                 Logout
         </button>
+    </div>
         </>
         : alert("Usted no tiene acceso a esta vista."))
     

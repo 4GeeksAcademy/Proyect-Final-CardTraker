@@ -28,7 +28,7 @@ export const Admin = () => {
 
   return(
 <>
-
+<div id="body">
       <ul class="nav nav-tabs justify-content-center" id="myTab" role="tablist">
         <li class="nav-item justify-content-center" role="presentation">
           <button class="nav-link active" id="home-tab" data-bs-toggle="tab" data-bs-target="#home-tab-pane" type="button" role="tab" aria-controls="home-tab-pane" aria-selected="true"><strong>List</strong></button>
@@ -131,6 +131,7 @@ export const Admin = () => {
           </div>  
         </div>
       </div>
+    </div>
       </>
     ) 
 }
