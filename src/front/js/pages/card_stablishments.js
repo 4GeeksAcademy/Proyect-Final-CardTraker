@@ -14,6 +14,7 @@ export const CardStbReg = () => {
 
         const [card, setCard] = useState('');
         const [stablishment, setStablishment] = useState('');
+
       
         const handleCardChange = (event) => {
           setCard(event.target.value);
@@ -21,30 +22,31 @@ export const CardStbReg = () => {
         const handleStablishmentChange = (event) => {
           setStablishment(event.target.value);
         };
+       
         
         return (store.auth === true ? 
           <>
             <div className="row">
-            <select value={card} onChange={handleCardChange}>
+            <select value={card} onChange={handleCardChange}> 
               <option value="">Select a Card</option> 
               {store.cards == ""
               ?
                 <option className="text-white text-center">No Cards</option>
               :
-                store.cards.map((item,id) => <option>{item.bank_name + " " +item.card_provider+ " " +item.last_four}</option>)
+                store.cards.map((item,id) => <option value={item.id} >{item.bank_name + " " +item.card_provider+ " " +item.last_four + "id " + item.id}</option>)
               }               
               
             </select>
             </div>
             <p>Selected value: {card}</p>
             
-            <select value={stablishment} onChange={handleStablishmentChange}>
+            <select value={stablishment} onChange={handleStablishmentChange} >
               <option value="">Select an establishment</option>
               {store.stablishments == ""
               ?
                 <option className="text-white text-center">No Stablishments</option>
               :
-                store.stablishments.map((item,id) => <option>{item.stablishments}</option>)
+                store.stablishments.map((item,id) => <option value={item.id}>{item.stablishments}</option>)
               }       
             </select>
             <p>Selected value: {stablishment}</p>

@@ -171,7 +171,8 @@ const getState = ({ getStore, getActions, setStore }) => {
 				}
 			},
 // Traer Establecimientos como usuario Ok
-			getUserStablishments: async () => {				
+			getUserStablishments: async () => {		
+						
 				const requestOptions = {
 				method: 'GET',
 				};
@@ -187,14 +188,22 @@ const getState = ({ getStore, getActions, setStore }) => {
 				}
 			},
 // Traer tarjetas como usuario 
-			getUserCards: async () => {				
+			getUserCards: async () => {	
+				let token = localStorage.getItem("token")
+				// var myHeaders = new Headers();
+				// 	myHeaders.append("", "");
+				// 	myHeaders.append("Authorization", "Bearer "+ token);			
 				const requestOptions = {
+
 				method: 'GET',
+				headers: {Authorization:"Bearer "+token},
+				
 				};
 				let store = getStore() 
 				try {
 				const response = await fetch(process.env.BACKEND_URL + "/api/cards", requestOptions);
 				const result = await response.json();
+				console.log(result)
 				await setStore({cards:result});
 				console.log(store.cards)
 				} catch (error) {

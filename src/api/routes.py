@@ -161,13 +161,18 @@ def protected():
 
 #Llama todas las tarjetas OK
 @api.route('/cards', methods=['GET'])
+@jwt_required()
 def get_cards():
-    all_cards = Cards.query.all()
+    # Access the identity of the current user with get_jwt_identity
+    current_user = get_jwt_identity()    
+    user=User.query.filter_by(email=current_user).first()
+    all_cards = Cards.query.filter_by(card_user_id=user.id).all()
     print(all_cards)
     result = list(map(lambda card: card.serialize() ,all_cards))
-    print(result)    
+    print(result)   
+    return jsonify(result), 200  
 
-    return jsonify(result), 200
+   
 
 #Llama una sola tarjeta OK
 @api.route('/cards/<int:card_id>', methods=['GET'])
