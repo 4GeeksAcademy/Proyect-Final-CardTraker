@@ -4,7 +4,7 @@ from api.models import db, User, Cards, Stablishments
 from api.utils import generate_sitemap, APIException
 from flask_jwt_extended import create_access_token, get_jwt_identity, jwt_required, decode_token
 from flask_login import login_required, current_user
-from flask_mail import Message 
+from flask_mail import Message
 import random, string, os
 from extensions import mail
 
@@ -220,24 +220,9 @@ def delete_card(card_id):
     return jsonify(response_body)
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 if __name__ == "__main__":
     api.run()
+
 @api.route('/stablishments', methods=['GET'])
 def get_all_stablishments():
     all_stablishments = Stablishments.query.all()
@@ -248,10 +233,10 @@ def get_all_stablishments():
 @api.route('/stablishments', methods=['POST']) 
 def create_stablishment():
     name = request.get_json()["name"]
-    link = request.get_json()["link"]
-    record_exist = Stablishments.query.filter(or_(Stablishments.stablishments_name == name, Stablishments.stablishments_links == link) ).first()
+    links = request.get_json()["links"]
+    record_exist = Stablishments.query.filter(or_(Stablishments.stablishments_name == name, Stablishments.stablishments_links == links) ).first()
     if record_exist is None: 
-        new_stablishment = Stablishments (stablishments_name = name, stablishments_links = link, status = True)
+        new_stablishment = Stablishments (stablishments_name = name, stablishments_links = links, status = True)
         db.session.add(new_stablishment)
         db.session.commit()
     
@@ -260,12 +245,18 @@ def create_stablishment():
     else: 
         return jsonify({"msg" : "el establecimeinto ya existe"}), 409
     
+    
 @api.route('/stablishments/<int:stablishments_id>', methods=['DELETE'])
 def delete_stablishments(stablishments_id):
-    stablishments = Stablishments.query.get(stablishments_id)
+    stablishments=Stablishments.query.filter_by(id=stablishments_id).first()
     db.session.delete(stablishments)
     db.session.commit()
-    return jsonify({"msg" : "The stablishment has been deleted"}), 100
+    response_body = {
+        "message": "Stablishment Deleted"
+        }
+    return jsonify(response_body), 200
+
+
     
 
         

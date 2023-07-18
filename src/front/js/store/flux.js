@@ -4,6 +4,8 @@ const getState = ({ getStore, getActions, setStore }) => {
 			message: null,
 			adminStablishments: [],
 			stablishments: [],
+			user: [],
+			removeStablishments: [],
 			demo: [
 				{
 					title: "FIRST",
@@ -254,7 +256,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 					body: JSON.stringify(
 						{
 							"name": stablishments_name,
-							"link": stablishments_links,  
+							"links": stablishments_links,  
 						}
 					)
 				};
@@ -263,18 +265,6 @@ const getState = ({ getStore, getActions, setStore }) => {
 					.then(data => console.log(data))
 					.catch(error => console.log('error', error));
             },
-
-			// getStablishments: async () => {
-			// 	const requestOptions = {
-			// 		method: 'GET',
-			// 	};
-				  
-			// 	await fetch(process.env.BACKEND_URL+ "/api/stablishments", requestOptions)
-			// 		.then(response => response.json())
-			// 		.then(result=> console.log(result))
-			// 		// .then(result => setStore({adminStablishments:result}))
-			// 		.catch(error => console.log('error', error));		
-			// }, 
 
 			getStablishments: async () => {
 				const requestOptions = {
@@ -292,16 +282,38 @@ const getState = ({ getStore, getActions, setStore }) => {
 				}
 			},
 
-			// deleteStablishments: (id) => {
-			// 	const requestOptions = {
-			// 		method: 'DELETE'
-			// 	  };
+			getUser: async () => {
+				const requestOptions = {
+				  method: 'GET',
+				};
+				let store = getStore() 
+				try {
+				  const response = await fetch(process.env.BACKEND_URL + "/api/user", requestOptions);
+				  const result = await response.json();
+				  console.log(result);
+				  await setStore({user:result});
+				  console.log(store.user)
+				} catch (error) {
+				  console.log('error', error);
+				}
+			},
 
-			// 	  fetch(process.env.BACKEND_URL + "/api/stablishments/" + id, requestOptions)
-			// 		.then(response => response.json())
-			// 		.then(result => console.log(result))
-			// 		.catch(error => console.log('error', error));
-			// }
+			deleteStablishments: (id) => {
+				const requestOptions = {
+					method: 'DELETE'
+				  };
+
+				const store = getStore();
+				setStore({removeStablishments:[
+					...store.removeStablishments.slice(index + id, store.removeStablishments.length)					
+				]})
+				
+
+				  fetch(process.env.BACKEND_URL + "/api/stablishments/" + id, requestOptions)
+					.then(response => response.json())
+					.then(result => console.log(result))
+					.catch(error => console.log('error', error));
+			}
 			
 		}
 	};

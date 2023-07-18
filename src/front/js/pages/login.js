@@ -59,7 +59,7 @@ export const Login = () => {
 						</div>
 						<div className="text-center p-t-115">
 							<span className="txt1">
-								Don’t have an account? 
+								Don't have an account? 
 							</span>
 							<Link to="/register" className="txt2 ms-2" onClick={store.flashMessage=null}>
 									<strong>Sign Up</strong>

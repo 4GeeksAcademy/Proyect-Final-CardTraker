@@ -19,7 +19,7 @@ class User(db.Model):
         return {
             "id": self.id,
             "email": self.email,
-            "user name": self.user_name,
+            "user_name": self.user_name,
             # do not serialize the password, its a security breach
         }
 
@@ -50,7 +50,7 @@ class Stablishments(db.Model):
     status = db.Column(db.Boolean(), unique=False, nullable=False)
 
     def __repr__(self):
-        return f'<Stablishments {self.stablishments_name}>'
+        return f'<Stablishments {self.stablishments_name, self.stablishments_links}>'
 
     def serialize(self):
         return {
