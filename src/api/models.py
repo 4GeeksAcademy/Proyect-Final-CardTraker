@@ -73,12 +73,13 @@ class Stablishments(db.Model):
     
     
     def __repr__(self):
-        return f'<Stablishments {self.stablishments_name}>'
+        return f'<Stablishments {self.stablishments_name, self.stablishments_links}>'
     def serialize(self):
         return {
             "id": self.id,
             "stablishments": self.stablishments_name,
             "links": self.stablishments_links
         }
-    
+
+
 

@@ -13,6 +13,7 @@ import { Request } from "./pages/request_reset";
 import { Reset } from "./pages/reset_password";
 import { CardStbReg } from "./pages/card_stablishments";
 import injectContext from "./store/appContext";
+import { Admin } from "./pages/adminStablishments";
 
 import { Navbar } from "./component/navbar";
 import { Footer } from "./component/footer";
@@ -31,6 +32,7 @@ const Layout = () => {
             <Navbar/>
                 <ScrollToTop>
                     <Routes>
+                        <Route element={<Admin />} path="/Admin" />
                         <Route element={<Home />} path="/" />
                         <Route element={<Demo />} path="/demo" />
                         <Route element={<Login />} path="/login" />
