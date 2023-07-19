@@ -1,6 +1,6 @@
 
 import click
-from api.models import db, User, Cards
+from api.models import db, User, Cards, Stablishments
 
 """
 In this file, you can add as many commands as you want using the @app.cli.command decorator
@@ -30,3 +30,16 @@ def setup_commands(app):
         print("All test users created")
 
         ### Insert the code to populate others tables if needed
+    @app.cli.command("insert-test-stablishments") # name of our command
+    @click.argument("count") # argument of out command
+    def insert_test_stablishments(count):
+        print("Creating test stablishments")
+        for x in range(1, int(count) + 1):
+            stablishments = Stablishments()
+            stablishments.stablishments_name = "test_user" + str(x) + "@test.com"
+            stablishments.stablishments_links = "123456"
+            stablishments.status = True
+            db.session.add(stablishments)
+            db.session.commit()
+            print(stablishments.stablishments_name, " created.")
+        print("All test stablishments created")

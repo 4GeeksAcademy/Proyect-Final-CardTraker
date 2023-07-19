@@ -16,7 +16,7 @@ export const Demo = () => {
 
 	return (
 		(store.auth === true ?  
-			
+	
 		<>
 			<div className="header">
                 <h1 className="header-text text-center">Enlista tus tarjetas y vinculalas<br/> con un establecimiento para empezar.</h1>

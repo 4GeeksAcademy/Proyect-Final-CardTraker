@@ -1,0 +1,39 @@
+#body {
+    margin-top: 100px;
+}
+#bg-body {
+    padding-top: 1%;
+    padding-bottom: 3%;
+    background-image: url(https://kinsta.com/es/wp-content/uploads/sites/8/2021/06/list-of-credit-card-declined-codes-1024x512.png);
+}
+#creatorform {
+    background-color: rgb(44, 3, 77);
+    margin-top: 30px;
+    margin-left: 300px;
+    margin-right: 300px;
+    border-radius: 10px;
+}
+#submit {
+    margin-left: 300px;
+    margin-bottom: 30px;
+    font-size:20px;
+    margin: 30px;
+    cursor: pointer;
+}
+#stablishment-table {
+    margin-left: 300px;
+    margin-right: 300px;
+}
+#user-table {
+    margin-left: 300px;
+    margin-right: 300px;
+}
+#bg {
+    background-image: url(https://kinsta.com/es/wp-content/uploads/sites/8/2021/06/list-of-credit-card-declined-codes-1024x512.png);
+    padding-top: 30px;
+    padding-bottom: 50px;
+}
+#bg-tables {
+    background-color: rgb(44, 3, 77);
+    border-radius: 10px;
+}

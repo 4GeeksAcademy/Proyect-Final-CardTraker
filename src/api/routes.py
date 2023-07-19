@@ -1,4 +1,5 @@
 from flask import Flask, request, jsonify, url_for, Blueprint, flash, redirect
+from sqlalchemy import or_
 from api.models import db, User, Cards, UserStablishments, Stablishments
 from api.utils import generate_sitemap, APIException
 from flask_jwt_extended import create_access_token, get_jwt_identity, jwt_required, decode_token
@@ -265,6 +266,7 @@ def delete_stb_card(cardstb_id):
     
     return jsonify(response_body)
 
+
 #Llama los establecimientos
 @api.route('/stablishments', methods=['GET'])
 def get_all_stablishments():
@@ -273,7 +275,28 @@ def get_all_stablishments():
     result = list(map(lambda item: item.serialize(), all_stablishments))
     return jsonify(result), 200
 
+@api.route('/stablishments', methods=['POST'])
+def create_stablishment():
+    name = request.get_json()["name"]
+    links = request.get_json()["links"]
+    record_exist = Stablishments.query.filter(or_(Stablishments.stablishments_name == name, Stablishments.stablishments_links == links) ).first()
+    if record_exist is None:
+        new_stablishment = Stablishments (stablishments_name = name, stablishments_links = links, status = True)
+        db.session.add(new_stablishment)
+        db.session.commit()
+        return jsonify({"msg" : "el establecimiento agregado con exito"}), 200
+    else:
+        return jsonify({"msg" : "el establecimeinto ya existe"}), 409
 
+@api.route('/stablishments/<int:stablishments_id>', methods=['DELETE'])
+def delete_stablishments(stablishments_id):
+    remove_Stablishments=Stablishments.query.filter_by(id=stablishments_id).first()
+    db.session.delete(remove_Stablishments)
+    db.session.commit()
+    response_body = {
+        "message": "Stablishment Deleted"
+        }
+    return jsonify(response_body), 200
 
 
 
