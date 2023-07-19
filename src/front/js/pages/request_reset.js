@@ -17,9 +17,6 @@ export const Request = () => {
 			<div className="limiter">
 				<div className="container-login100">
 					<div className="wrap-login100">
-					{/* {store.flashMessage && (
-						<div className="flash-success-message">{store.flashMessage}</div>
-					)} */}
 					{store.flashMessage && (store.flashMessage === "No existe este usuario, debe registrarse primero." ? 
 						(<div className="flash-error-message">{store.flashMessage}</div>): 
 						(<div className="flash-success-message">{store.flashMessage}</div>)

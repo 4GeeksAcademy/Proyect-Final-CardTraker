@@ -11,6 +11,7 @@ export const Home = () => {
     const [amount, setAmount] = useState('')
     const [newValue, setNewValue] = useState('')
     const { store, actions } = useContext(Context);
+    
     async function exchange(e){
         e.preventDefault();
         console.log("currencyChange" + currencyChange);

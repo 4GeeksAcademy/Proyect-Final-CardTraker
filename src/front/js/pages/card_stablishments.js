@@ -35,7 +35,7 @@ export const CardStbReg = () => {
         
         return (store.auth === true ? 
           <>
-          <Link to="/">
+          <Link to="/demo">
                         <div className="container-login100-form-btn" id="opciones1">
                                 <div className="wrap-login100-form-btn">
                                     <div className="login100-form-bgbtn"></div>
